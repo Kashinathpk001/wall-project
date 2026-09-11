@@ -149,7 +149,13 @@
                                 <tr>
                                     <td>Shirt Ruin Probability</td>
                                     <td>
-                                        <span style="color: {% if useless_data.shirt_ruin_pct > 70 %}var(--red){% elif useless_data.shirt_ruin_pct > 40 %}var(--yellow){% else %}var(--green){% endif %}; font-weight: 700;">
+                                        {% if useless_data.shirt_ruin_pct > 70 %}
+                                        <span style="color: var(--red); font-weight: 700;">
+                                        {% elif useless_data.shirt_ruin_pct > 40 %}
+                                        <span style="color: var(--yellow); font-weight: 700;">
+                                        {% else %}
+                                        <span style="color: var(--green); font-weight: 700;">
+                                        {% endif %}
                                             {{ useless_data.shirt_ruin_pct }}%
                                         </span> ({{ useless_data.shirt_color_label }})
                                     </td>

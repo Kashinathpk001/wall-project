@@ -614,7 +614,15 @@
                                 {% endif %}
                             </td>
                             <td>
-                                <strong style="color: {% if wall.score >= 80 %}var(--green){% elif wall.score >= 60 %}var(--teal){% elif wall.score >= 40 %}var(--yellow){% else %}var(--red){% endif %}; font-size: 1rem;">
+                                {% if wall.score >= 80 %}
+                                <strong style="color: var(--green); font-size: 1rem;">
+                                {% elif wall.score >= 60 %}
+                                <strong style="color: var(--teal); font-size: 1rem;">
+                                {% elif wall.score >= 40 %}
+                                <strong style="color: var(--yellow); font-size: 1rem;">
+                                {% else %}
+                                <strong style="color: var(--red); font-size: 1rem;">
+                                {% endif %}
                                     {{ wall.score }}/100
                                 </strong>
                             </td>
