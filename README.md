@@ -69,17 +69,21 @@ For Software:
 
 # Screenshots
 
-### 1. Homepage & Apple-Style Starting Reveal
-![Homepage](static/images/walls/level_7.jpg)
-*Cinematic dark-to-light reveal featuring the motto "We all need some wall to lean on", campus hotspots, live ticker telemetry, and fast presets.*
+### 1. Interactive Workbench & Live Telemetry
+![Homepage Workbench](static/images/screenshots/01_homepage_workbench.png)
+*Real-time wall parameter console with Kerala campus presets, dynamic chalk risk calculations, posture selection, and the interactive Test-Lean Simulator.*
 
 ### 2. The 6 Levels of Wall Health (Visual Tier List)
-![6 Levels of Wall Health](static/images/walls/level_1.jpg)
-*Ranked visual reference guide from Level 6 (The Dream Wall - 100/100) down to Level 1 (Ancient Wet Moss Wall - 02/100 Biohazard).*
+![6 Levels of Wall Health](static/images/screenshots/02_wall_levels_scale.png)
+*Photorealistic visual reference guide ranked from Level 06 (The Dream Wall - 100/100) down to Level 01 (Ancient Wet Moss Wall - 02/100 Biohazard).*
 
-### 3. Certified Wall Dossier & Psychological Archetype
-![Wall Dossier](static/images/walls/level_6.jpg)
-*Audited report with circular score count-up, pass/caution/fail verdict, psychiatric diagnosis, and red flag warnings.*
+### 3. Certified Wall Report & Leaning Permission Dossier
+![Wall Dossier Report](static/images/screenshots/03_wall_dossier_report.png)
+*Detailed wall inspection dossier with calculated trust score (90/100 TRUSTWORTHY), psychological archetype diagnosis ("The Reliable One"), structural warnings, and official certificate of leaning permission.*
+
+### 4. Hall of Fame: Wall Trust Leaderboard
+![Hall of Fame Leaderboard](static/images/screenshots/04_hall_of_fame_leaderboard.png)
+*Live global rankings of campus walls audited by students, tracking the most reliable architectural monoliths and dangerous cardboard partitions.*
 
 ---
 
