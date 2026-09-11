@@ -25,8 +25,9 @@ def get_db_connection():
         )
         return conn, "mysql"
     except Exception:
-        # Fallback to local SQLite if MySQL is unreachable (e.g. for GitHub reviewers)
-        conn = sqlite3.connect("wall_trust.db")
+        # Fallback to local SQLite if MySQL is unreachable (e.g. for GitHub reviewers or Vercel)
+        db_path = "/tmp/wall_trust.db" if os.environ.get("VERCEL") else "wall_trust.db"
+        conn = sqlite3.connect(db_path)
         cursor = conn.cursor()
         cursor.execute(
             """
