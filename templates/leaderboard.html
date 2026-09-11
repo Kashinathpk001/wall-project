@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wall Trustworthiness Leaderboard</title>
+</head>
+
+<body>
+
+    <h1>🏆 Wall Trustworthiness Leaderboard</h1>
+
+    <nav>
+        <a href="/">Home</a> |
+        <a href="/inspect">Inspect a Wall</a> |
+        <a href="/leaderboard">Leaderboard</a> |
+        <a href="/database">Database</a>
+    </nav>
+
+    <hr>
+
+    <h2>🌟 Most Trustworthy Walls</h2>
+    {% if top_walls %}
+    <table border="1" cellpadding="8" cellspacing="0">
+        <thead>
+            <tr>
+                <th>Rank</th>
+                <th>ID</th>
+                <th>Location</th>
+                <th>Score</th>
+                <th>Verdict</th>
+                <th>Personality</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for wall in top_walls %}
+            <tr>
+                <td>#{{ loop.index }}</td>
+                <td>#{{ wall.id }}</td>
+                <td>{{ wall.location }}</td>
+                <td><strong>{{ wall.score }}/100</strong></td>
+                <td>{{ wall.verdict }}</td>
+                <td>{{ wall.personality }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>No walls recorded yet.</p>
+    {% endif %}
+
+    <br>
+
+    <h2>⚠️ Wall of Shame (Least Trustworthy)</h2>
+    {% if shame_walls %}
+    <table border="1" cellpadding="8" cellspacing="0">
+        <thead>
+            <tr>
+                <th>Rank</th>
+                <th>ID</th>
+                <th>Location</th>
+                <th>Score</th>
+                <th>Verdict</th>
+                <th>Personality</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for wall in shame_walls %}
+            <tr>
+                <td>#{{ loop.index }}</td>
+                <td>#{{ wall.id }}</td>
+                <td>{{ wall.location }}</td>
+                <td><strong>{{ wall.score }}/100</strong></td>
+                <td>{{ wall.verdict }}</td>
+                <td>{{ wall.personality }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>No walls recorded yet.</p>
+    {% endif %}
+
+    <br>
+    <p><a href="/inspect"><button>Inspect a Wall</button></a></p>
+
+</body>
+
+</html>

@@ -11,6 +11,15 @@
 
     <h1>🧱 Wall Inspection Result</h1>
 
+    <nav>
+        <a href="/">Home</a> |
+        <a href="/inspect">Inspect a Wall</a> |
+        <a href="/leaderboard">Leaderboard</a> |
+        <a href="/database">Database</a>
+    </nav>
+
+    <hr>
+
     <p><strong>Wall Record ID:</strong> #{{ wall_id }}</p>
     <h2>Verdict: {{ verdict }}</h2>
     <h3>Trust Score: {{ score }} / 100</h3>
@@ -31,6 +40,8 @@
 
     <br>
     <a href="/inspect"><button>Inspect Another Wall</button></a>
+    <a href="/leaderboard"><button>View Leaderboard</button></a>
+    <a href="/database"><button>View Database</button></a>
     <a href="/"><button>Back to Home</button></a>
 
 </body>

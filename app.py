@@ -190,7 +190,7 @@ def inspect():
         verdict = get_verdict(score)
         personality = get_personality(score, cracks, dampness, repairs)
 
-        # Store wall inspection into MySQL
+        # Store wall inspection into database
         conn, db_type = get_db_connection()
         cursor = conn.cursor()
 
@@ -259,6 +259,46 @@ def inspect():
         )
 
     return render_template("inspect.html")
+
+
+@app.route("/database")
+def database():
+    conn, db_type = get_db_connection()
+    if db_type == "mysql":
+        cursor = conn.cursor(dictionary=True)
+        cursor.execute("SELECT * FROM walls ORDER BY id DESC")
+        walls = cursor.fetchall()
+        cursor.close()
+    else:
+        conn.row_factory = sqlite3.Row
+        cursor = conn.cursor()
+        cursor.execute("SELECT * FROM walls ORDER BY id DESC")
+        walls = [dict(row) for row in cursor.fetchall()]
+        cursor.close()
+    conn.close()
+    return render_template("database.html", walls=walls)
+
+
+@app.route("/leaderboard")
+def leaderboard():
+    conn, db_type = get_db_connection()
+    if db_type == "mysql":
+        cursor = conn.cursor(dictionary=True)
+        cursor.execute("SELECT * FROM walls ORDER BY score DESC, id ASC LIMIT 10")
+        top_walls = cursor.fetchall()
+        cursor.execute("SELECT * FROM walls ORDER BY score ASC, id ASC LIMIT 5")
+        shame_walls = cursor.fetchall()
+        cursor.close()
+    else:
+        conn.row_factory = sqlite3.Row
+        cursor = conn.cursor()
+        cursor.execute("SELECT * FROM walls ORDER BY score DESC, id ASC LIMIT 10")
+        top_walls = [dict(row) for row in cursor.fetchall()]
+        cursor.execute("SELECT * FROM walls ORDER BY score ASC, id ASC LIMIT 5")
+        shame_walls = [dict(row) for row in cursor.fetchall()]
+        cursor.close()
+    conn.close()
+    return render_template("leaderboard.html", top_walls=top_walls, shame_walls=shame_walls)
 
 
 if __name__ == "__main__":

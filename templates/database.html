@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wall Inspection Database</title>
+</head>
+
+<body>
+
+    <h1>🧱 Wall Inspection Database</h1>
+
+    <nav>
+        <a href="/">Home</a> |
+        <a href="/inspect">Inspect a Wall</a> |
+        <a href="/leaderboard">Leaderboard</a> |
+        <a href="/database">Database</a>
+    </nav>
+
+    <hr>
+
+    <h2>All Inspected Walls</h2>
+
+    {% if walls %}
+    <table border="1" cellpadding="8" cellspacing="0">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Location</th>
+                <th>Age (yrs)</th>
+                <th>Height (m)</th>
+                <th>Thickness (mm)</th>
+                <th>Cracks</th>
+                <th>Dampness</th>
+                <th>Repairs</th>
+                <th>Score</th>
+                <th>Verdict</th>
+                <th>Personality</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for wall in walls %}
+            <tr>
+                <td>#{{ wall.id }}</td>
+                <td>{{ wall.location }}</td>
+                <td>{{ wall.age }}</td>
+                <td>{{ wall.height }}</td>
+                <td>{{ wall.thickness }}</td>
+                <td>{{ wall.cracks }}</td>
+                <td>{{ "Yes" if wall.dampness else "No" }}</td>
+                <td>{{ wall.repairs }}</td>
+                <td><strong>{{ wall.score }}/100</strong></td>
+                <td>{{ wall.verdict }}</td>
+                <td>{{ wall.personality }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>No walls inspected yet. <a href="/inspect">Inspect the first wall!</a></p>
+    {% endif %}
+
+    <br>
+    <p><a href="/inspect"><button>Inspect Another Wall</button></a></p>
+
+</body>
+
+</html>
