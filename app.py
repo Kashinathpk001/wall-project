@@ -1,6 +1,94 @@
+import os
+import sqlite3
 from flask import Flask, render_template, request
+import mysql.connector
 
 app = Flask(__name__)
+
+# Database configuration (environment variables with local defaults)
+DB_HOST = os.environ.get("DB_HOST", "localhost")
+DB_USER = os.environ.get("DB_USER", "root")
+DB_PASSWORD = os.environ.get("DB_PASSWORD", "root")
+DB_NAME = os.environ.get("DB_NAME", "wall_trust")
+DB_PORT = int(os.environ.get("DB_PORT", 3306))
+
+
+def get_db_connection():
+    """Connect to MySQL if available, or fall back to SQLite for reviewers."""
+    try:
+        conn = mysql.connector.connect(
+            host=DB_HOST,
+            user=DB_USER,
+            password=DB_PASSWORD,
+            database=DB_NAME,
+            port=DB_PORT,
+        )
+        return conn, "mysql"
+    except Exception:
+        # Fallback to local SQLite if MySQL is unreachable (e.g. for GitHub reviewers)
+        conn = sqlite3.connect("wall_trust.db")
+        cursor = conn.cursor()
+        cursor.execute(
+            """
+            CREATE TABLE IF NOT EXISTS walls (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                location TEXT NOT NULL,
+                age REAL NOT NULL,
+                height REAL NOT NULL,
+                thickness REAL NOT NULL,
+                cracks INTEGER NOT NULL,
+                dampness INTEGER NOT NULL,
+                repairs INTEGER NOT NULL,
+                score INTEGER NOT NULL,
+                verdict TEXT NOT NULL,
+                personality TEXT NOT NULL,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            )
+        """
+        )
+        conn.commit()
+        return conn, "sqlite"
+
+
+def init_db():
+    """Ensure database and table exist in MySQL."""
+    try:
+        conn = mysql.connector.connect(
+            host=DB_HOST,
+            user=DB_USER,
+            password=DB_PASSWORD,
+            port=DB_PORT,
+        )
+        cursor = conn.cursor()
+        cursor.execute(f"CREATE DATABASE IF NOT EXISTS {DB_NAME};")
+        cursor.execute(f"USE {DB_NAME};")
+        cursor.execute(
+            """
+            CREATE TABLE IF NOT EXISTS walls (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                location VARCHAR(255) NOT NULL,
+                age FLOAT NOT NULL,
+                height FLOAT NOT NULL,
+                thickness FLOAT NOT NULL,
+                cracks INT NOT NULL,
+                dampness INT NOT NULL,
+                repairs INT NOT NULL,
+                score INT NOT NULL,
+                verdict VARCHAR(50) NOT NULL,
+                personality VARCHAR(100) NOT NULL,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            );
+        """
+        )
+        conn.commit()
+        cursor.close()
+        conn.close()
+    except Exception:
+        pass
+
+
+# Initialize database on startup
+init_db()
 
 
 def calculate_score(age, cracks, dampness, repairs, thickness):
@@ -102,7 +190,56 @@ def inspect():
         verdict = get_verdict(score)
         personality = get_personality(score, cracks, dampness, repairs)
 
+        # Store wall inspection into MySQL
+        conn, db_type = get_db_connection()
+        cursor = conn.cursor()
+
+        if db_type == "mysql":
+            query = """
+                INSERT INTO walls (location, age, height, thickness, cracks, dampness, repairs, score, verdict, personality)
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+            """
+            values = (
+                location,
+                age,
+                height,
+                thickness,
+                cracks,
+                dampness,
+                repairs,
+                score,
+                verdict,
+                personality,
+            )
+            cursor.execute(query, values)
+            conn.commit()
+            wall_id = cursor.lastrowid
+        else:
+            query = """
+                INSERT INTO walls (location, age, height, thickness, cracks, dampness, repairs, score, verdict, personality)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            """
+            values = (
+                location,
+                age,
+                height,
+                thickness,
+                cracks,
+                dampness,
+                repairs,
+                score,
+                verdict,
+                personality,
+            )
+            cursor.execute(query, values)
+            conn.commit()
+            wall_id = cursor.lastrowid
+
+        cursor.close()
+        conn.close()
+
         wall = {
+            "id": wall_id,
             "location": location,
             "age": age,
             "height": height,
@@ -115,6 +252,7 @@ def inspect():
         return render_template(
             "result.html",
             wall=wall,
+            wall_id=wall_id,
             score=score,
             verdict=verdict,
             personality=personality,
