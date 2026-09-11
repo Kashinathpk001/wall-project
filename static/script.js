@@ -322,9 +322,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const scoreNumEl = document.getElementById('countup-score');
     const meterFillEl = document.getElementById('meter-fill');
     if (scoreNumEl) {
-        const targetScore = parseInt(scoreNumEl.getAttribute('data-target') || '0', 10);
+        const rawTarget = scoreNumEl.getAttribute('data-target');
+        const targetScore = parseInt(rawTarget !== null ? rawTarget : '0', 10);
         let current = 0;
-        const duration = 1300; // ms
+        scoreNumEl.textContent = '0';
+        if (meterFillEl) meterFillEl.style.width = '0%';
+        const duration = 1200; // ms
         const startTime = performance.now();
 
         function updateScore(now) {
@@ -345,7 +348,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (meterFillEl) {
             setTimeout(() => {
                 meterFillEl.style.width = `${targetScore}%`;
-            }, 100);
+            }, 80);
         }
     }
 

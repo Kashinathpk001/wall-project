@@ -69,7 +69,7 @@
                             CAN YOU LEAN ON IT? SCORE
                         </div>
                         <div class="dossier-score-num" style="color: {{ bar_color }};">
-                            <span id="countup-score" data-target="{{ score }}">0</span><span style="font-size: 1.5rem; color: var(--subtext0);">/100</span>
+                            <span id="countup-score" data-target="{{ score }}">{{ score }}</span><span style="font-size: 1.5rem; color: var(--subtext0);">/100</span>
                         </div>
                     </div>
                     <div style="text-align: right;">
@@ -83,7 +83,7 @@
                 </div>
 
                 <div class="eng-bar-track" style="height: 6px; margin: 0.6rem 0 1.2rem; background: var(--surface0); border-radius: 1px; overflow: hidden;">
-                    <div id="meter-fill" class="eng-bar-fill" data-target="{{ score }}" style="width: 0%; height: 100%; background: {{ bar_color }}; transition: width 1.2s cubic-bezier(0.16, 1, 0.3, 1);"></div>
+                    <div id="meter-fill" class="eng-bar-fill" data-target="{{ score }}" style="width: {{ score }}%; height: 100%; background: {{ bar_color }}; transition: width 1.2s cubic-bezier(0.16, 1, 0.3, 1);"></div>
                 </div>
 
                 <!-- PERSONALITY & ADVISORY -->
@@ -245,5 +245,6 @@
         </div>
     </footer>
 
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>
