@@ -1,49 +1,249 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wall Inspection Result</title>
+    <title>Wall Report #{{ wall_id }} // CAN YOU LEAN ON?</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
-
 <body>
 
-    <h1>🧱 Wall Inspection Result</h1>
+    <!-- TOP HEADER -->
+    <header class="sys-header">
+        <div class="sys-bar-meta">
+            <div class="sys-status-pill">
+                <span class="status-dot"></span>
+                <span>STATUS: TEST COMPLETE</span>
+            </div>
+            <div>WALL REPORT #{{ wall_id }}</div>
+            <div>SAVED TO DATABASE</div>
+        </div>
 
-    <nav>
-        <a href="/">Home</a> |
-        <a href="/inspect">Inspect a Wall</a> |
-        <a href="/leaderboard">Leaderboard</a> |
-        <a href="/database">Database</a>
-    </nav>
+        <nav class="sys-nav">
+            <div class="brand-cell">
+                <span>🧱 CAN YOU LEAN ON?</span>
+                <span class="brand-tag" style="background: var(--peach); color: var(--crust); font-weight: 700;">🏆 100% USELESS PROJECT</span>
+            </div>
+            <div class="nav-tabs">
+                <a href="/" class="nav-tab">
+                    <span>[01]</span> Home
+                </a>
+                <a href="/inspect" class="nav-tab">
+                    <span>[02]</span> Check a Wall
+                </a>
+                <a href="/#standards-scale" class="nav-tab">
+                    <span>[03]</span> 6 Wall Levels
+                </a>
+                <a href="/leaderboard" class="nav-tab">
+                    <span>[04]</span> Leaderboard
+                </a>
+                <a href="/database" class="nav-tab">
+                    <span>[05]</span> All Walls
+                </a>
+            </div>
+        </nav>
+    </header>
 
-    <hr>
+    <main class="workspace-container">
+        
+        <div class="dossier-sheet">
+            <div class="dossier-header-bar">
+                <div>WALL REPORT #{{ wall_id }}</div>
+                <div style="color: var(--teal);">● RECORD SAVED</div>
+            </div>
 
-    <p><strong>Wall Record ID:</strong> #{{ wall_id }}</p>
-    <h2>Verdict: {{ verdict }}</h2>
-    <h3>Trust Score: {{ score }} / 100</h3>
-    <p><strong>Wall Personality:</strong> {{ personality }}</p>
+            <div class="dossier-body">
+                <div style="margin-bottom: 1.5rem;">
+                    <div style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--overlay0); text-transform: uppercase;">
+                        TESTED WALL
+                    </div>
+                    <h1 style="font-size: 2.2rem; font-weight: 700; margin-top: 0.2rem; color: var(--text);">
+                        {{ wall.location }}
+                    </h1>
+                </div>
 
-    <hr>
+                <!-- SCORE BANNER -->
+                <div class="dossier-score-banner">
+                    <div>
+                        <div style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--subtext0); text-transform: uppercase;">
+                            CAN YOU LEAN ON IT? SCORE
+                        </div>
+                        <div class="dossier-score-num" style="color: {{ bar_color }};">
+                            <span id="countup-score" data-target="{{ score }}">0</span><span style="font-size: 1.5rem; color: var(--subtext0);">/100</span>
+                        </div>
+                    </div>
+                    <div style="text-align: right;">
+                        <span class="table-badge" style="background: {{ bar_color }}22; color: {{ bar_color }}; border: 1px solid {{ bar_color }}66; font-size: 0.95rem; padding: 0.5rem 0.9rem;">
+                            ● {{ verdict }}
+                        </span>
+                        <div style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--subtext0); margin-top: 0.5rem;">
+                            CALCULATED SCORE
+                        </div>
+                    </div>
+                </div>
 
-    <h3>Inspection Details</h3>
-    <ul>
-        <li><strong>Location:</strong> {{ wall.location }}</li>
-        <li><strong>Age:</strong> {{ wall.age }} years</li>
-        <li><strong>Height:</strong> {{ wall.height }} m</li>
-        <li><strong>Thickness:</strong> {{ wall.thickness }} mm</li>
-        <li><strong>Visible Cracks:</strong> {{ wall.cracks }}</li>
-        <li><strong>Dampness:</strong> {{ "Yes" if wall.dampness else "No" }}</li>
-        <li><strong>Previous Repairs:</strong> {{ wall.repairs }}</li>
-    </ul>
+                <div class="eng-bar-track" style="height: 6px; margin: 0.6rem 0 1.2rem; background: var(--surface0); border-radius: 1px; overflow: hidden;">
+                    <div id="meter-fill" class="eng-bar-fill" data-target="{{ score }}" style="width: 0%; height: 100%; background: {{ bar_color }}; transition: width 1.2s cubic-bezier(0.16, 1, 0.3, 1);"></div>
+                </div>
 
-    <br>
-    <a href="/inspect"><button>Inspect Another Wall</button></a>
-    <a href="/leaderboard"><button>View Leaderboard</button></a>
-    <a href="/database"><button>View Database</button></a>
-    <a href="/"><button>Back to Home</button></a>
+                <!-- PERSONALITY & ADVISORY -->
+                <div style="margin: 1.5rem 0; border-left: 3px solid var(--blue); background: var(--crust); padding: 1.2rem; border-radius: 0 var(--radius) var(--radius) 0;">
+                    <div style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--blue); text-transform: uppercase; margin-bottom: 0.3rem;">
+                        WALL PERSONALITY
+                    </div>
+                    <div style="font-size: 1.25rem; font-weight: 700; color: var(--text); margin-bottom: 0.4rem;">
+                        {{ personality }}
+                    </div>
+                    <p style="font-size: 0.88rem; color: var(--subtext1); line-height: 1.5; margin-bottom: 0.8rem;">
+                        {{ personality_desc }}
+                    </p>
+                    <div style="display: inline-block; font-family: var(--font-mono); font-size: 0.76rem; color: var(--text); background: var(--surface0); padding: 0.35rem 0.7rem; border-radius: var(--radius); border: var(--border-subtle);">
+                        {{ personality_advisory }}
+                    </div>
+                </div>
+
+                <!-- WARNINGS -->
+                {% if red_flags %}
+                <div class="flags-box">
+                    <strong style="color: var(--red); font-family: var(--font-mono); font-size: 0.8rem; text-transform: uppercase;">
+                        ⚠️ WARNINGS FOUND ({{ red_flags|length }} ISSUE{% if red_flags|length > 1 %}S{% endif %})
+                    </strong>
+                    <ul class="flags-list">
+                        {% for flag in red_flags %}
+                        <li>{{ flag }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
+
+                <!-- USELESS CERTIFICATE OF LEANING PERMISSION -->
+                <div style="margin: 1.5rem 0; border: 2px dashed var(--peach); background: rgba(245, 169, 127, 0.05); padding: 1.4rem; border-radius: var(--radius); position: relative;">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem;">
+                        <div>
+                            <span class="table-badge" style="background: rgba(245, 169, 127, 0.2); color: var(--peach); border: 1px solid var(--peach);">
+                                🏆 TINKERHUB USELESS HACKATHON EDITION
+                            </span>
+                            <h2 style="font-size: 1.25rem; font-weight: 700; color: var(--text); margin-top: 0.4rem;">
+                                Official Certificate of Leaning Permission
+                            </h2>
+                        </div>
+                        <div style="border: 2px solid var(--yellow); color: var(--yellow); padding: 0.35rem 0.75rem; font-family: var(--font-mono); font-size: 0.72rem; font-weight: 700; text-transform: uppercase; transform: rotate(-3deg); border-radius: var(--radius);">
+                            [ 100% USELESS ]
+                        </div>
+                    </div>
+
+                    <div class="dossier-grid" style="margin-bottom: 1rem;">
+                        <div class="dossier-spec-card">
+                            <div style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--overlay0); text-transform: uppercase; margin-bottom: 0.6rem;">
+                                LEANING CLEARANCE METRICS
+                            </div>
+                            <table class="specimen-specs-table">
+                                <tr>
+                                    <td>Max Safe Lean Duration</td>
+                                    <td style="color: var(--teal); font-weight: 700;">{{ useless_data.max_duration }}</td>
+                                </tr>
+                                <tr>
+                                    <td>White Chalk Expected</td>
+                                    <td><strong style="color: var(--yellow);">{{ useless_data.chalk_sqcm }} cm²</strong> on back</td>
+                                </tr>
+                                <tr>
+                                    <td>Shirt Ruin Probability</td>
+                                    <td>
+                                        <span style="color: {% if useless_data.shirt_ruin_pct > 70 %}var(--red){% elif useless_data.shirt_ruin_pct > 40 %}var(--yellow){% else %}var(--green){% endif %}; font-weight: 700;">
+                                            {{ useless_data.shirt_ruin_pct }}%
+                                        </span> ({{ useless_data.shirt_color_label }})
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <div class="dossier-spec-card">
+                            <div style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--overlay0); text-transform: uppercase; margin-bottom: 0.6rem;">
+                                UNNECESSARY TELEMETRY
+                            </div>
+                            <table class="specimen-specs-table">
+                                <tr>
+                                    <td>Tested Posture</td>
+                                    <td>{{ useless_data.posture_label }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Campus Gossip Absorbed</td>
+                                    <td style="color: var(--peach);">{{ useless_data.gossip_count }} secrets</td>
+                                </tr>
+                                <tr>
+                                    <td>Scientific Utility</td>
+                                    <td style="color: var(--red); font-weight: 700;">Precisely 0.00%</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div style="background: var(--crust); padding: 0.8rem 1rem; border-radius: var(--radius); border-left: 3px solid var(--peach); font-size: 0.82rem; color: var(--subtext0); line-height: 1.5;">
+                        <strong style="color: var(--peach); font-family: var(--font-mono); font-size: 0.75rem; text-transform: uppercase;">
+                            💡 Emergency Useless Recommendation:
+                        </strong>
+                        <div style="margin-top: 0.2rem; color: var(--text);">
+                            {{ useless_data.recommendation }}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- METRICS GRID -->
+                <div class="dossier-grid">
+                    <div class="dossier-spec-card">
+                        <div style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--overlay0); text-transform: uppercase; margin-bottom: 0.6rem;">
+                            MEASUREMENTS
+                        </div>
+                        <table class="specimen-specs-table">
+                            <tr><td>Height</td><td>{{ wall.height }} m</td></tr>
+                            <tr><td>Thickness</td><td>{{ wall.thickness }} mm</td></tr>
+                            <tr><td>Age</td><td>{{ wall.age }} years</td></tr>
+                        </table>
+                    </div>
+
+                    <div class="dossier-spec-card">
+                        <div style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--overlay0); text-transform: uppercase; margin-bottom: 0.6rem;">
+                            DAMAGE &amp; CONDITION
+                        </div>
+                        <table class="specimen-specs-table">
+                            <tr><td>Cracks Found</td><td>{{ wall.cracks }}</td></tr>
+                            <tr><td>Wet or Sweating?</td><td>{% if wall.dampness %}<span style="color: var(--red);">💧 WET / SWEATING</span>{% else %}<span style="color: var(--green);">DRY</span>{% endif %}</td></tr>
+                            <tr><td>Past Patches</td><td>{{ wall.repairs }}</td></tr>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- ACTION BUTTONS -->
+                <div style="display: flex; gap: 0.8rem; flex-wrap: wrap; margin-top: 2rem;">
+                    <a href="/inspect" class="btn-execute" style="width: auto; padding: 0.65rem 1.2rem; margin-top: 0;">
+                        [ + TEST ANOTHER WALL ]
+                    </a>
+                    <a href="/leaderboard" class="btn-secondary-eng">
+                        [ LEADERBOARD ]
+                    </a>
+                    <a href="/database" class="btn-secondary-eng">
+                        [ ALL WALLS ]
+                    </a>
+                    <button onclick="window.print()" class="btn-secondary-eng">
+                        [ PRINT REPORT ]
+                    </button>
+                </div>
+
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="sys-footer">
+        <div class="footer-inner">
+            <div>
+                CAN YOU LEAN ON? // Built by <strong>Kashinath P K</strong>
+            </div>
+            <div>
+                A fun project for tired students. All scores are for entertainment.
+            </div>
+        </div>
+    </footer>
 
 </body>
-
 </html>

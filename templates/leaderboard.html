@@ -1,90 +1,203 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wall Trustworthiness Leaderboard</title>
+    <title>Wall Leaderboard // CAN YOU LEAN ON?</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
-
 <body>
 
-    <h1>🏆 Wall Trustworthiness Leaderboard</h1>
+    <!-- TOP HEADER -->
+    <header class="sys-header">
+        <div class="sys-bar-meta">
+            <div class="sys-status-pill">
+                <span class="status-dot"></span>
+                <span>STATUS: ONLINE</span>
+            </div>
+            <div>WALL RANKINGS</div>
+            <div>BEST &amp; WORST WALLS</div>
+        </div>
 
-    <nav>
-        <a href="/">Home</a> |
-        <a href="/inspect">Inspect a Wall</a> |
-        <a href="/leaderboard">Leaderboard</a> |
-        <a href="/database">Database</a>
-    </nav>
+        <nav class="sys-nav">
+            <div class="brand-cell">
+                <span>🧱 CAN YOU LEAN ON?</span>
+                <span class="brand-tag" style="background: var(--peach); color: var(--crust); font-weight: 700;">🏆 100% USELESS PROJECT</span>
+            </div>
+            <div class="nav-tabs">
+                <a href="/" class="nav-tab">
+                    <span>[01]</span> Home
+                </a>
+                <a href="/inspect" class="nav-tab">
+                    <span>[02]</span> Check a Wall
+                </a>
+                <a href="/#standards-scale" class="nav-tab">
+                    <span>[03]</span> 6 Wall Levels
+                </a>
+                <a href="/leaderboard" class="nav-tab active">
+                    <span>[04]</span> Leaderboard
+                </a>
+                <a href="/database" class="nav-tab">
+                    <span>[05]</span> All Walls
+                </a>
+            </div>
+        </nav>
+    </header>
 
-    <hr>
+    <div class="field-memo">
+        <div class="field-memo-inner">
+            <div>
+                <span class="field-memo-prefix">// TINKERHUB USELESS PROJECTS // </span>
+                <span class="field-memo-quote">The Best &amp; Worst Walls to Lean On</span>
+            </div>
+            <div class="field-memo-source">
+                Rock-solid campus monuments vs. fragile cardboard partitions waiting to ruin your black shirt.
+            </div>
+        </div>
+    </div>
 
-    <h2>🌟 Most Trustworthy Walls</h2>
-    {% if top_walls %}
-    <table border="1" cellpadding="8" cellspacing="0">
-        <thead>
-            <tr>
-                <th>Rank</th>
-                <th>ID</th>
-                <th>Location</th>
-                <th>Score</th>
-                <th>Verdict</th>
-                <th>Personality</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for wall in top_walls %}
-            <tr>
-                <td>#{{ loop.index }}</td>
-                <td>#{{ wall.id }}</td>
-                <td>{{ wall.location }}</td>
-                <td><strong>{{ wall.score }}/100</strong></td>
-                <td>{{ wall.verdict }}</td>
-                <td>{{ wall.personality }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-    {% else %}
-    <p>No walls recorded yet.</p>
-    {% endif %}
+    <main class="workspace-container">
+        
+        <!-- HALL OF FAME -->
+        <section style="margin-bottom: 2.5rem;">
+            <div class="scale-section-header">
+                <div>
+                    <h2 style="font-size: 1.25rem; font-family: var(--font-mono); text-transform: uppercase; color: var(--green);">
+                        🌟 HALL OF FAME: STRONGEST WALLS
+                    </h2>
+                    <p style="color: var(--subtext0); font-size: 0.82rem;">
+                        Walls you can trust with your full body weight. Zero chalk dust, rock solid.
+                    </p>
+                </div>
+                <span class="scale-meta-tag" style="color: var(--green);">TOP WALLS</span>
+            </div>
 
-    <br>
+            {% if top_walls %}
+            <div class="eng-table-wrapper">
+                <table class="eng-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 70px;">Rank</th>
+                            <th>Wall Name</th>
+                            <th>Score</th>
+                            <th>Verdict</th>
+                            <th>Personality</th>
+                            <th style="width: 90px;">Report</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for wall in top_walls %}
+                        <tr>
+                            <td>
+                                {% if loop.index == 1 %}<strong style="color: var(--yellow);">#01</strong>
+                                {% elif loop.index == 2 %}<strong style="color: var(--subtext1);">#02</strong>
+                                {% elif loop.index == 3 %}<strong style="color: var(--peach);">#03</strong>
+                                {% else %}<span>#0{{ loop.index }}</span>{% endif %}
+                            </td>
+                            <td>
+                                <strong>{{ wall.location }}</strong>
+                                <span style="font-size: 0.7rem; color: var(--overlay0); display: block;">ID #{{ wall.id }}</span>
+                            </td>
+                            <td>
+                                <strong style="color: var(--green); font-size: 1.05rem;">{{ wall.score }}/100</strong>
+                            </td>
+                            <td>
+                                <span class="table-badge badge-trustworthy">{{ wall.verdict }}</span>
+                            </td>
+                            <td><em>{{ wall.personality }}</em></td>
+                            <td>
+                                <a href="/result/{{ wall.id }}" class="btn-secondary-eng" style="padding: 0.2rem 0.5rem; font-size: 0.72rem;">[ VIEW ]</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <div style="padding: 1.5rem; border: 1px dashed var(--surface1); text-align: center; color: var(--subtext0); font-family: var(--font-mono); font-size: 0.8rem;">
+                No top walls recorded yet.
+            </div>
+            {% endif %}
+        </section>
 
-    <h2>⚠️ Wall of Shame (Least Trustworthy)</h2>
-    {% if shame_walls %}
-    <table border="1" cellpadding="8" cellspacing="0">
-        <thead>
-            <tr>
-                <th>Rank</th>
-                <th>ID</th>
-                <th>Location</th>
-                <th>Score</th>
-                <th>Verdict</th>
-                <th>Personality</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for wall in shame_walls %}
-            <tr>
-                <td>#{{ loop.index }}</td>
-                <td>#{{ wall.id }}</td>
-                <td>{{ wall.location }}</td>
-                <td><strong>{{ wall.score }}/100</strong></td>
-                <td>{{ wall.verdict }}</td>
-                <td>{{ wall.personality }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-    {% else %}
-    <p>No walls recorded yet.</p>
-    {% endif %}
+        <!-- WALL OF SHAME -->
+        <section style="margin-bottom: 2rem;">
+            <div class="scale-section-header">
+                <div>
+                    <h2 style="font-size: 1.25rem; font-family: var(--font-mono); text-transform: uppercase; color: var(--red);">
+                        ⚠️ WALL OF SHAME: WORST WALLS
+                    </h2>
+                    <p style="color: var(--subtext0); font-size: 0.82rem;">
+                        Cracking, wet, or flimsy walls. Lean at your own risk.
+                    </p>
+                </div>
+                <span class="scale-meta-tag" style="color: var(--red);">HIGH RISK</span>
+            </div>
 
-    <br>
-    <p><a href="/inspect"><button>Inspect a Wall</button></a></p>
+            {% if worst_walls %}
+            <div class="eng-table-wrapper">
+                <table class="eng-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 70px;">Rank</th>
+                            <th>Wall Name</th>
+                            <th>Score</th>
+                            <th>Verdict</th>
+                            <th>Personality</th>
+                            <th style="width: 90px;">Report</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for wall in worst_walls %}
+                        <tr>
+                            <td><strong style="color: var(--red);">#0{{ loop.index }}</strong></td>
+                            <td>
+                                <strong>{{ wall.location }}</strong>
+                                <span style="font-size: 0.7rem; color: var(--overlay0); display: block;">ID #{{ wall.id }}</span>
+                            </td>
+                            <td>
+                                <strong style="color: var(--red); font-size: 1.05rem;">{{ wall.score }}/100</strong>
+                            </td>
+                            <td>
+                                <span class="table-badge badge-danger">{{ wall.verdict }}</span>
+                            </td>
+                            <td><em>{{ wall.personality }}</em></td>
+                            <td>
+                                <a href="/result/{{ wall.id }}" class="btn-secondary-eng" style="padding: 0.2rem 0.5rem; font-size: 0.72rem;">[ VIEW ]</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <div style="padding: 1.5rem; border: 1px dashed var(--surface1); text-align: center; color: var(--subtext0); font-family: var(--font-mono); font-size: 0.8rem;">
+                No risky walls recorded yet.
+            </div>
+            {% endif %}
+        </section>
+
+        <div style="display: flex; gap: 0.8rem;">
+            <a href="/inspect" class="btn-execute" style="width: auto; padding: 0.65rem 1.2rem; margin-top: 0;">
+                [ + TEST A WALL ]
+            </a>
+            <a href="/" class="btn-secondary-eng">
+                [ BACK TO HOME ]
+            </a>
+        </div>
+
+    </main>
+
+    <footer class="sys-footer">
+        <div class="footer-inner">
+            <div>
+                CAN YOU LEAN ON? // Built by <strong>Kashinath P K</strong>
+            </div>
+            <div>
+                A fun project for tired students. All scores are for entertainment.
+            </div>
+        </div>
+    </footer>
 
 </body>
-
 </html>

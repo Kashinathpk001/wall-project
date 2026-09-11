@@ -1,69 +1,257 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inspect a Wall</title>
+    <title>Check a Wall // CAN YOU LEAN ON?</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
-
 <body>
 
-    <h1>🧱 Inspect a Wall</h1>
+    <!-- TOP HEADER -->
+    <header class="sys-header">
+        <div class="sys-bar-meta">
+            <div class="sys-status-pill">
+                <span class="status-dot"></span>
+                <span>STATUS: READY</span>
+            </div>
+            <div>CHECK ANY WALL</div>
+            <div>ENTER DETAILS TO SEE IF IT HOLDS YOU</div>
+        </div>
 
-    <nav>
-        <a href="/">Home</a> |
-        <a href="/inspect">Inspect a Wall</a> |
-        <a href="/leaderboard">Leaderboard</a> |
-        <a href="/database">Database</a>
-    </nav>
+        <nav class="sys-nav">
+            <div class="brand-cell">
+                <span>🧱 CAN YOU LEAN ON?</span>
+                <span class="brand-tag" style="background: var(--peach); color: var(--crust); font-weight: 700;">🏆 100% USELESS PROJECT</span>
+            </div>
+            <div class="nav-tabs">
+                <a href="/" class="nav-tab">
+                    <span>[01]</span> Home
+                </a>
+                <a href="/inspect" class="nav-tab active">
+                    <span>[02]</span> Check a Wall
+                </a>
+                <a href="/#standards-scale" class="nav-tab">
+                    <span>[03]</span> 6 Wall Levels
+                </a>
+                <a href="/leaderboard" class="nav-tab">
+                    <span>[04]</span> Leaderboard
+                </a>
+                <a href="/database" class="nav-tab">
+                    <span>[05]</span> All Walls
+                </a>
+            </div>
+        </nav>
+    </header>
 
-    <hr>
+    <div class="field-memo">
+        <div class="field-memo-inner">
+            <div>
+                <span class="field-memo-prefix">// TINKERHUB USELESS PROJECTS // </span>
+                <span class="field-memo-quote">Check Any Wall On Campus</span>
+            </div>
+            <div class="field-memo-source">
+                Pick a popular spot below or enter custom measurements to see if it will hold your body or ruin your shirt.
+            </div>
+        </div>
+    </div>
 
-    <form method="POST" action="/inspect">
+    <main class="workspace-container" style="max-width: 900px;">
+        
+        <!-- PRESETS STRIP -->
+        <section class="eng-panel" style="margin-bottom: 1.5rem;">
+            <div class="panel-titlebar">
+                <span>01 // POPULAR CAMPUS SPOTS (CLICK TO LOAD)</span>
+                <div class="titlebar-actions">
+                    <span>6 SPOTS</span>
+                </div>
+            </div>
+            <div class="panel-content">
+                <div class="preset-strip">
+                    <button type="button" class="eng-preset-btn" onclick="selectPreset('pazhampori', this)">
+                        <div class="preset-code"><span>SPOT 01</span><span class="preset-score" style="color: var(--yellow);">50/100</span></div>
+                        <div class="preset-label">Pazhampori Counter</div>
+                        <div class="preset-note">Tea steam &amp; fried snack oil</div>
+                    </button>
 
-        <label for="location">Wall Location</label><br>
-        <input type="text" id="location" name="location" placeholder="e.g. Living Room North Wall" required>
+                    <button type="button" class="eng-preset-btn" onclick="selectPreset('lecture', this)">
+                        <div class="preset-code"><span>SPOT 02</span><span class="preset-score" style="color: var(--teal);">70/100</span></div>
+                        <div class="preset-label">Lecture Hall Backrow</div>
+                        <div class="preset-note">Smooth sleep-tested wall</div>
+                    </button>
 
-        <br><br>
+                    <button type="button" class="eng-preset-btn" onclick="selectPreset('hostel', this)">
+                        <div class="preset-code"><span>SPOT 03</span><span class="preset-score" style="color: var(--peach);">45/100</span></div>
+                        <div class="preset-label">Cricket Corridor</div>
+                        <div class="preset-note">Survived 14 midnight matches</div>
+                    </button>
 
-        <label for="age">Age (years)</label><br>
-        <input type="number" id="age" name="age" min="0" value="0" required>
+                    <button type="button" class="eng-preset-btn" onclick="selectPreset('library', this)">
+                        <div class="preset-code"><span>SPOT 04</span><span class="preset-score" style="color: var(--green);">85/100</span></div>
+                        <div class="preset-label">Library Silent Corner</div>
+                        <div class="preset-note">Cold from exam panic tears</div>
+                    </button>
 
-        <br><br>
+                    <button type="button" class="eng-preset-btn" onclick="selectPreset('washroom', this)">
+                        <div class="preset-code"><span>SPOT 05</span><span class="preset-score" style="color: var(--red);">15/100</span></div>
+                        <div class="preset-label">Washroom Stall</div>
+                        <div class="preset-note">Thin partition with graffiti</div>
+                    </button>
 
-        <label for="height">Height (m)</label><br>
-        <input type="number" id="height" name="height" step="0.1" min="0" value="2.5" required>
+                    <button type="button" class="eng-preset-btn" onclick="selectPreset('fee', this)">
+                        <div class="preset-code"><span>SPOT 06</span><span class="preset-score" style="color: var(--green);">100/100</span></div>
+                        <div class="preset-label">College Fee Counter</div>
+                        <div class="preset-note">Solid stone that never moves</div>
+                    </button>
+                </div>
+            </div>
+        </section>
 
-        <br><br>
+        <!-- INPUT FORM -->
+        <section class="eng-panel">
+            <div class="panel-titlebar">
+                <span>02 // WALL DETAILS</span>
+                <div class="titlebar-actions">
+                    <span>ENTER STATS</span>
+                </div>
+            </div>
 
-        <label for="thickness">Thickness (mm)</label><br>
-        <input type="number" id="thickness" name="thickness" min="0" value="200" required>
+            <div class="panel-content">
+                <form action="/inspect" method="POST" id="inspectForm">
+                    <div class="eng-form-grid">
+                        
+                        <div class="eng-field full-span">
+                            <label class="field-spec-label" for="wall-location">
+                                <span>Where is this wall?</span>
+                                <span class="field-unit">NAME</span>
+                            </label>
+                            <input type="text" id="wall-location" name="location" class="eng-input" value="Main Campus Corridor East" placeholder="e.g. Canteen Back Wall, Room 204" required>
+                        </div>
 
-        <br><br>
+                        <div class="eng-field">
+                            <label class="field-spec-label" for="wall-thickness">
+                                <span>Thickness</span>
+                                <span class="field-unit">MILLIMETERS</span>
+                            </label>
+                            <input type="number" id="wall-thickness" name="thickness" class="eng-input" min="30" max="1000" value="230" required>
+                        </div>
 
-        <label for="cracks">Visible Cracks</label><br>
-        <input type="number" id="cracks" name="cracks" min="0" value="0" required>
+                        <div class="eng-field">
+                            <label class="field-spec-label" for="wall-age">
+                                <span>How old is it?</span>
+                                <span class="field-unit">YEARS</span>
+                            </label>
+                            <input type="number" id="wall-age" name="age" class="eng-input" min="0" max="250" value="8" required>
+                        </div>
 
-        <br><br>
+                        <div class="eng-field">
+                            <label class="field-spec-label" for="wall-height">
+                                <span>Height</span>
+                                <span class="field-unit">METERS</span>
+                            </label>
+                            <input type="number" id="wall-height" name="height" class="eng-input" step="0.1" min="1.0" max="25.0" value="3.0" required>
+                        </div>
 
-        <label for="dampness">Dampness</label><br>
-        <select id="dampness" name="dampness">
-            <option value="0">No</option>
-            <option value="1">Yes</option>
-        </select>
+                        <div class="eng-field">
+                            <label class="field-spec-label" for="wall-cracks">
+                                <span>Visible Cracks</span>
+                                <span class="field-unit">COUNT</span>
+                            </label>
+                            <input type="number" id="wall-cracks" name="cracks" class="eng-input" min="0" max="50" value="0">
+                        </div>
 
-        <br><br>
+                        <div class="eng-field">
+                            <label class="field-spec-label" for="wall-repairs">
+                                <span>Past Repairs / Patches</span>
+                                <span class="field-unit">COUNT</span>
+                            </label>
+                            <input type="number" id="wall-repairs" name="repairs" class="eng-input" min="0" max="50" value="1">
+                        </div>
 
-        <label for="repairs">Previous Repairs</label><br>
-        <input type="number" id="repairs" name="repairs" min="0" value="0" required>
+                        <div class="eng-field">
+                            <label class="field-spec-label" for="wall-dampness">
+                                <span>Is it wet or sweating?</span>
+                                <span class="field-unit">CONDITION</span>
+                            </label>
+                            <select id="wall-dampness" name="dampness" class="eng-select">
+                                <option value="0" selected>Dry (won't ruin shirt)</option>
+                                <option value="1">Wet / Sweating (will soak clothes)</option>
+                            </select>
+                        </div>
 
-        <br><br>
+                        <div class="eng-field">
+                            <label class="field-spec-label" for="shirt-color">
+                                <span>What shirt are you wearing?</span>
+                                <span class="field-unit">CHALK RISK</span>
+                            </label>
+                            <select id="shirt-color" name="shirt_color" class="eng-select">
+                                <option value="black" selected>Black T-Shirt / Hoodie (Chalk Magnet)</option>
+                                <option value="navy">Navy Blue (High Contrast Danger)</option>
+                                <option value="gray">Gray Casual (50/50 Survival)</option>
+                                <option value="white">White College Shirt (Chalk Camouflage)</option>
+                                <option value="silk">Silk Mundu / Fancy Wear (Regret Guaranteed)</option>
+                            </select>
+                        </div>
 
-        <button type="submit">ANALYZE</button>
+                        <div class="eng-field full-span">
+                            <label class="field-spec-label" for="lean-posture">
+                                <span>Your Leaning Posture</span>
+                                <span class="field-unit">SLOUCH ANGLE</span>
+                            </label>
+                            <select id="lean-posture" name="posture" class="eng-select">
+                                <option value="slouch" selected>The 4 PM Chai Slouch (45° backward lean with Sulaimani)</option>
+                                <option value="reels">The Reel Scroller (One shoulder against wall, scrolling feed)</option>
+                                <option value="nap">The 1st Period Nap (Forehead pressed directly against brick)</option>
+                                <option value="hero">The Corridor Hero (One foot on wall, waiting for wind)</option>
+                                <option value="elbow">The Casual Elbow Rest (Minimal commitment)</option>
+                            </select>
+                        </div>
 
-    </form>
+                    </div>
 
+                    <div style="display: flex; gap: 1rem; margin-top: 1.5rem; align-items: center;">
+                        <button type="submit" class="btn-execute" style="flex: 2; margin-top: 0;">
+                            <span>[ CHECK THIS WALL → ]</span>
+                        </button>
+                        <a href="/" class="btn-secondary-eng" style="flex: 1; justify-content: center; padding: 0.85rem 1rem;">
+                            [ BACK TO HOME ]
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="sys-footer">
+        <div class="footer-inner">
+            <div>
+                CAN YOU LEAN ON? // Built by <strong>Kashinath P K</strong>
+            </div>
+            <div>
+                A fun project for tired students. All scores are for entertainment.
+            </div>
+        </div>
+    </footer>
+
+    <!-- SCAN MODAL ON SUBMIT -->
+    <div id="scan-modal">
+        <div class="scan-dialog">
+            <div class="scan-radar-box">
+                <div class="scan-ring"></div>
+                <div class="scan-ring-outer"></div>
+                <span style="font-size: 1.8rem;">📐</span>
+            </div>
+            <div class="scan-title">[ CHECKING YOUR WALL... ]</div>
+            <div id="scan-status-text" class="scan-status-text">
+                Measuring wall strength &amp; checking for chalk powder...
+            </div>
+            <div class="scan-bar-track">
+                <div class="scan-bar-fill"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
-
 </html>

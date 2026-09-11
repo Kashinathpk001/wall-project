@@ -1,42 +1,675 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wall Trustworthiness</title>
+    <title>CAN YOU LEAN ON? — Test Your Wall Before You Lean</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
-
 <body>
 
-    <h1>🧱 WALL TRUSTWORTHINESS</h1>
+    <!-- BOOT INITIALIZATION CURTAIN -->
+    <div id="intro-curtain">
+        <div class="intro-reticle-box">
+            <div class="intro-radar-ring"></div>
+            <div class="intro-radar-ring-2"></div>
+            <span style="font-size: 2.2rem;">🧱</span>
+        </div>
+        <div class="intro-title">
+            CAN YOU LEAN ON? <span class="intro-tag">v2.4</span>
+        </div>
+        <div id="intro-status-text" class="intro-status-line">
+            CHECKING WALL STRENGTH...
+        </div>
+        <div class="intro-loading-track">
+            <div id="intro-loading-fill" class="intro-loading-fill"></div>
+        </div>
+        <div class="intro-skip-hint">
+            [ CLICK ANYWHERE OR PRESS ANY KEY TO ENTER ]
+        </div>
+    </div>
 
-    <nav>
-        <a href="/">Home</a> |
-        <a href="/inspect">Inspect a Wall</a> |
-        <a href="/leaderboard">Leaderboard</a> |
-        <a href="/database">Database</a>
-    </nav>
+    <!-- TOP HEADER -->
+    <header class="sys-header">
+        <div class="sys-bar-meta">
+            <div class="sys-status-pill">
+                <span class="status-dot"></span>
+                <span>STATUS: ONLINE</span>
+            </div>
+            <div>TEST YOUR WALL BEFORE YOU LEAN</div>
+            <div>TIME: <span id="sys-clock">--:--:-- UTC</span></div>
+        </div>
 
-    <hr>
+        <!-- LIVE TICKER BAR -->
+        <div class="live-ticker">
+            <span><span class="ticker-pulse"></span> <strong>RECENT CHECKS:</strong></span>
+            <span>Canteen Pazhampori Counter: <strong style="color: var(--yellow);">50/100</strong> (Pazhampori Sentry)</span>
+            <span>•</span>
+            <span>Lecture Hall 101: <strong style="color: var(--teal);">70/100</strong> (Nap Polish Certified)</span>
+            <span>•</span>
+            <span>Hostel Cricket Corridor: <strong style="color: var(--peach);">45/100</strong> (Survived 14 Matches)</span>
+            <span>•</span>
+            <span>College Fee Counter: <strong style="color: var(--green);">100/100</strong> (Solid Stonewall)</span>
+            <span>•</span>
+            <span>Washroom Stall Partition: <strong style="color: var(--red);">15/100</strong> (Too Thin)</span>
+        </div>
 
-    <h2>How much can you trust a wall?</h2>
+        <nav class="sys-nav">
+            <div class="brand-cell">
+                <span>🧱 CAN YOU LEAN ON?</span>
+                <span class="brand-tag" style="background: var(--peach); color: var(--crust); font-weight: 700;">🏆 100% USELESS PROJECT</span>
+            </div>
+            <div class="nav-tabs">
+                <a href="/" class="nav-tab active">
+                    <span>[01]</span> Home
+                </a>
+                <a href="/inspect" class="nav-tab">
+                    <span>[02]</span> Check a Wall
+                </a>
+                <a href="#standards-scale" class="nav-tab">
+                    <span>[03]</span> 6 Wall Levels
+                </a>
+                <a href="/leaderboard" class="nav-tab">
+                    <span>[04]</span> Leaderboard
+                </a>
+                <a href="/database" class="nav-tab">
+                    <span>[05]</span> All Walls
+                </a>
+            </div>
+        </nav>
+    </header>
 
-    <p>
-        Inspect a wall and discover its completely fictional
-        trustworthiness score.
-    </p>
+    <!-- MOTTO BANNER -->
+    <div class="field-memo">
+        <div class="field-memo-inner">
+            <div>
+                <span class="field-memo-prefix">// TINKERHUB USELESS PROJECTS // </span>
+                <span class="field-memo-quote">“We all need some wall to lean on.”</span>
+            </div>
+            <div class="field-memo-source">
+                Solving a problem that doesn't exist: Checking if campus walls will support your slouch or ruin your shirt.
+            </div>
+        </div>
+    </div>
 
-    <a href="/inspect">
-        <button>Inspect a Wall</button>
-    </a>
-    <a href="/leaderboard">
-        <button>View Leaderboard</button>
-    </a>
-    <a href="/database">
-        <button>View Database</button>
-    </a>
+    <!-- MAIN WORKBENCH -->
+    <main class="workspace-container">
+        
+        <div class="console-grid">
+            
+            <!-- LEFT PANE: FORM -->
+            <section class="eng-panel">
+                <div class="panel-titlebar">
+                    <span>01 // TEST A WALL</span>
+                    <div class="titlebar-actions">
+                        <span>QUICK CHECK</span>
+                        <span>●</span>
+                    </div>
+                </div>
 
+                <div class="panel-content">
+                    
+                    <!-- CAMPUS PRESETS -->
+                    <div class="preset-strip-header">
+                        <span>POPULAR CAMPUS SPOTS (CLICK TO LOAD)</span>
+                        <span>6 SPOTS</span>
+                    </div>
+
+                    <div class="preset-strip">
+                        <button type="button" class="eng-preset-btn" onclick="selectPreset('pazhampori', this)">
+                            <div class="preset-code">
+                                <span>SPOT 01</span>
+                                <span class="preset-score" style="color: var(--yellow);">50/100</span>
+                            </div>
+                            <div class="preset-label">Pazhampori Counter</div>
+                            <div class="preset-note">Tea steam &amp; fried snack oil</div>
+                        </button>
+
+                        <button type="button" class="eng-preset-btn" onclick="selectPreset('lecture', this)">
+                            <div class="preset-code">
+                                <span>SPOT 02</span>
+                                <span class="preset-score" style="color: var(--teal);">70/100</span>
+                            </div>
+                            <div class="preset-label">Lecture Hall Backrow</div>
+                            <div class="preset-note">Smooth pillar tested by sleepy students</div>
+                        </button>
+
+                        <button type="button" class="eng-preset-btn" onclick="selectPreset('hostel', this)">
+                            <div class="preset-code">
+                                <span>SPOT 03</span>
+                                <span class="preset-score" style="color: var(--peach);">45/100</span>
+                            </div>
+                            <div class="preset-label">Cricket Corridor</div>
+                            <div class="preset-note">Survived 14 midnight matches</div>
+                        </button>
+
+                        <button type="button" class="eng-preset-btn" onclick="selectPreset('library', this)">
+                            <div class="preset-code">
+                                <span>SPOT 04</span>
+                                <span class="preset-score" style="color: var(--green);">85/100</span>
+                            </div>
+                            <div class="preset-label">Library Silent Corner</div>
+                            <div class="preset-note">Cold from exam panic tears</div>
+                        </button>
+
+                        <button type="button" class="eng-preset-btn" onclick="selectPreset('washroom', this)">
+                            <div class="preset-code">
+                                <span>SPOT 05</span>
+                                <span class="preset-score" style="color: var(--red);">15/100</span>
+                            </div>
+                            <div class="preset-label">Washroom Stall</div>
+                            <div class="preset-note">Super thin plywood + cheat notes</div>
+                        </button>
+
+                        <button type="button" class="eng-preset-btn" onclick="selectPreset('fee', this)">
+                            <div class="preset-code">
+                                <span>SPOT 06</span>
+                                <span class="preset-score" style="color: var(--green);">100/100</span>
+                            </div>
+                            <div class="preset-label">College Fee Counter</div>
+                            <div class="preset-note">Solid stone counter that never moves</div>
+                        </button>
+                    </div>
+
+                    <!-- DIRECT FORM -->
+                    <form action="/inspect" method="POST" id="workbenchForm">
+                        <div class="eng-form-grid">
+                            
+                            <div class="eng-field full-span">
+                                <label class="field-spec-label" for="wall-location">
+                                    <span>Where is this wall?</span>
+                                    <span class="field-unit">LOCATION NAME</span>
+                                </label>
+                                <input type="text" id="wall-location" name="location" class="eng-input" value="Canteen Pazhampori Counter" placeholder="e.g. Library Corner, 2nd Floor Corridor" required>
+                            </div>
+
+                            <div class="eng-field">
+                                <label class="field-spec-label" for="wall-thickness">
+                                    <span>Wall Thickness</span>
+                                    <span class="field-unit">MILLIMETERS</span>
+                                </label>
+                                <input type="number" id="wall-thickness" name="thickness" class="eng-input" min="30" max="1000" value="230" required>
+                            </div>
+
+                            <div class="eng-field">
+                                <label class="field-spec-label" for="wall-age">
+                                    <span>How old is it?</span>
+                                    <span class="field-unit">YEARS</span>
+                                </label>
+                                <input type="number" id="wall-age" name="age" class="eng-input" min="0" max="250" value="18" required>
+                            </div>
+
+                            <div class="eng-field">
+                                <label class="field-spec-label" for="wall-height">
+                                    <span>Height</span>
+                                    <span class="field-unit">METERS</span>
+                                </label>
+                                <input type="number" id="wall-height" name="height" class="eng-input" step="0.1" min="1.0" max="25.0" value="3.2" required>
+                            </div>
+
+                            <div class="eng-field">
+                                <label class="field-spec-label" for="wall-cracks">
+                                    <span>Visible Cracks</span>
+                                    <span class="field-unit">COUNT</span>
+                                </label>
+                                <input type="number" id="wall-cracks" name="cracks" class="eng-input" min="0" max="50" value="1">
+                            </div>
+
+                            <div class="eng-field">
+                                <label class="field-spec-label" for="wall-repairs">
+                                    <span>Past Repairs</span>
+                                    <span class="field-unit">PATCHES</span>
+                                </label>
+                                <input type="number" id="wall-repairs" name="repairs" class="eng-input" min="0" max="50" value="0">
+                            </div>
+
+                            <div class="eng-field">
+                                <label class="field-spec-label" for="wall-dampness">
+                                    <span>Is it wet or sweating?</span>
+                                    <span class="field-unit">CONDITION</span>
+                                </label>
+                                <select id="wall-dampness" name="dampness" class="eng-select">
+                                    <option value="0" selected>Dry (clean clothes safe)</option>
+                                    <option value="1">Wet / Sweating (will soak shirt)</option>
+                                </select>
+                            </div>
+
+                            <div class="eng-field">
+                                <label class="field-spec-label" for="shirt-color">
+                                    <span>What shirt are you wearing?</span>
+                                    <span class="field-unit">CHALK RISK</span>
+                                </label>
+                                <select id="shirt-color" name="shirt_color" class="eng-select">
+                                    <option value="black" selected>Black T-Shirt / Hoodie (Chalk Magnet)</option>
+                                    <option value="navy">Navy Blue (High Contrast Danger)</option>
+                                    <option value="gray">Gray Casual (50/50 Survival)</option>
+                                    <option value="white">White College Shirt (Chalk Camouflage)</option>
+                                    <option value="silk">Silk Mundu / Fancy Wear (Regret Guaranteed)</option>
+                                </select>
+                            </div>
+
+                            <div class="eng-field full-span">
+                                <label class="field-spec-label" for="lean-posture">
+                                    <span>Your Leaning Posture</span>
+                                    <span class="field-unit">SLOUCH ANGLE</span>
+                                </label>
+                                <select id="lean-posture" name="posture" class="eng-select">
+                                    <option value="slouch" selected>The 4 PM Chai Slouch (45° backward lean with Sulaimani)</option>
+                                    <option value="reels">The Reel Scroller (One shoulder against wall, scrolling feed)</option>
+                                    <option value="nap">The 1st Period Nap (Forehead pressed directly against brick)</option>
+                                    <option value="hero">The Corridor Hero (One foot on wall, waiting for wind)</option>
+                                    <option value="elbow">The Casual Elbow Rest (Minimal commitment)</option>
+                                </select>
+                            </div>
+
+                        </div>
+
+                        <button type="submit" class="btn-execute">
+                            <span>[ CAN I LEAN ON IT? (CHECK NOW) → ]</span>
+                        </button>
+                    </form>
+
+                </div>
+            </section>
+
+            <!-- RIGHT PANE: LIVE PREVIEW -->
+            <aside class="eng-panel">
+                <div class="panel-titlebar">
+                    <span>02 // LIVE WALL PREVIEW</span>
+                    <div class="titlebar-actions">
+                        <span>REAL-TIME READOUT</span>
+                    </div>
+                </div>
+
+                <div class="panel-content">
+                    <div class="telemetry-readouts">
+                        
+                        <div class="telemetry-stat-card">
+                            <div class="telemetry-card-title">
+                                <span>ESTIMATED WALL SCORE</span>
+                                <span id="tele-projected-score">EST: 80/100</span>
+                            </div>
+                            <div class="telemetry-score-display">
+                                <span class="score-num" id="tele-score-num">80</span>
+                                <span class="score-scale">/ 100</span>
+                            </div>
+                            <div class="telemetry-verdict-banner verdict-banner-pass" id="tele-verdict-banner">
+                                ● SAFE TO LEAN ON
+                            </div>
+                        </div>
+
+                        <!-- TEST-LEAN SIMULATOR -->
+                        <div class="telemetry-stat-card" style="border: 1px dashed var(--peach); background: rgba(245, 169, 127, 0.05);">
+                            <div class="telemetry-card-title">
+                                <span style="color: var(--peach);">🏃‍♂️ TEST-LEAN SIMULATOR</span>
+                                <span style="font-size: 0.65rem; color: var(--yellow);">USELESS FEATURE</span>
+                            </div>
+                            <button type="button" class="btn-execute" onclick="simulateLean()" style="padding: 0.5rem; font-size: 0.78rem; margin: 0.3rem 0; background: var(--peach); color: var(--crust);">
+                                [ CLICK TO SIMULATE LEANING NOW ]
+                            </button>
+                            <div id="sim-result-box" style="font-size: 0.76rem; color: var(--subtext1); padding: 0.4rem; background: var(--crust); border-radius: var(--radius); min-height: 2.2rem; display: flex; align-items: center; justify-content: center; text-align: center;">
+                                Click above to simulate placing your body weight against this wall.
+                            </div>
+                        </div>
+
+                        <!-- LIVE SENSOR BARS -->
+                        <div class="telemetry-stat-card">
+                            <div class="telemetry-card-title">
+                                <span>WHITE CHALK ON SHIRT RISK</span>
+                                <span id="tele-chalk-val" style="color: var(--yellow);">MEDIUM (64%)</span>
+                            </div>
+                            <div class="eng-bar-track">
+                                <div class="eng-bar-fill yellow" id="tele-chalk-bar" style="width: 64%;"></div>
+                            </div>
+                        </div>
+
+                        <div class="telemetry-stat-card">
+                            <div class="telemetry-card-title">
+                                <span>WALL MOISTURE / WETNESS</span>
+                                <span id="tele-moisture-val" style="color: var(--teal);">LOW (18%)</span>
+                            </div>
+                            <div class="eng-bar-track">
+                                <div class="eng-bar-fill" id="tele-moisture-bar" style="width: 18%;"></div>
+                            </div>
+                        </div>
+
+                        <div class="telemetry-stat-card">
+                            <div class="telemetry-card-title">
+                                <span>SUDDEN SNEEZE RESISTANCE</span>
+                                <span id="tele-sneeze-val" style="color: var(--green);">STABLE (82%)</span>
+                            </div>
+                            <div class="eng-bar-track">
+                                <div class="eng-bar-fill green" id="tele-sneeze-bar" style="width: 82%;"></div>
+                            </div>
+                        </div>
+
+                        <div class="telemetry-stat-card">
+                            <div class="telemetry-card-title">
+                                <span>CAMPUS GOSSIP ABSORBED BY WALL</span>
+                                <span id="tele-gossip-val" style="color: var(--peach);">4,820 SECRETS</span>
+                            </div>
+                            <div class="eng-bar-track">
+                                <div class="eng-bar-fill yellow" id="tele-gossip-bar" style="width: 76%;"></div>
+                            </div>
+                            <div style="font-size: 0.68rem; color: var(--overlay0); margin-top: 0.25rem;">
+                                Overheard breakup drama, canteen debates &amp; exam gossip.
+                            </div>
+                        </div>
+
+                        <!-- WALL PROFILE -->
+                        <div class="field-log-terminal">
+                            <div class="field-log-line">
+                                <span class="log-tag">[WALL PROFILE]:</span> <strong id="tele-arch-name" style="color: var(--text);">The Pazhampori Sentry</strong>
+                            </div>
+                            <div class="field-log-line" id="tele-arch-desc" style="color: var(--subtext1);">
+                                Hot coconut oil steam and 4 PM chai chats. The wall won't fall, but your shirt might smell like fried banana.
+                            </div>
+                            <div class="field-log-line log-warn" style="margin-top: 0.6rem; border-top: 1px dashed rgba(73, 77, 100, 0.4); padding-top: 0.4rem;">
+                                ⚠️ ADVICE: Don't lean with full weight against old walls with peeling yellow paint.
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </aside>
+
+        </div>
+
+        <!-- 03 THE 6 LEVELS OF WALLS -->
+        <section id="standards-scale" style="margin-top: 2rem;">
+            <div class="scale-section-header">
+                <div>
+                    <h2 style="font-size: 1.25rem; font-family: var(--font-mono); text-transform: uppercase;">
+                        03 // THE 6 LEVELS OF WALLS (BEST TO WORST)
+                    </h2>
+                    <p style="color: var(--subtext0); font-size: 0.82rem; margin-top: 0.2rem;">
+                        From clean museum concrete (Level 6) down to rotting moss bogs (Level 1). Know what you're leaning against.
+                    </p>
+                </div>
+                <span class="scale-meta-tag">WALL GUIDE</span>
+            </div>
+
+            <div class="scale-grid">
+                
+                <!-- LEVEL 6 -->
+                <div class="scale-specimen-card card-lvl-6">
+                    <div class="specimen-header-bar">
+                        <span style="color: var(--green); font-weight: 700;">🟢 LEVEL 06</span>
+                        <span style="color: var(--green); font-family: var(--font-mono);">100/100</span>
+                    </div>
+                    <div class="specimen-img-frame">
+                        <img src="{{ url_for('static', filename='images/walls/level_7.jpg') }}" alt="Level 6 - Pristine Architectural Monolith" loading="lazy">
+                        <span class="specimen-frame-corner corner-tl">+</span>
+                        <span class="specimen-frame-corner corner-tr">+</span>
+                        <span class="specimen-frame-corner corner-bl">+</span>
+                        <span class="specimen-frame-corner corner-br">+</span>
+                    </div>
+                    <div class="specimen-body">
+                        <div class="specimen-title">The Dream Wall</div>
+                        <p style="font-size: 0.8rem; color: var(--subtext0);">Smooth clean concrete. Zero dust, zero cracks, perfect support.</p>
+                        <table class="specimen-specs-table">
+                            <tr><td>Material</td><td>Reinforced Concrete</td></tr>
+                            <tr><td>Chalk on Shirt</td><td>0% (Silk Safe)</td></tr>
+                            <tr><td>Can You Lean?</td><td>Sleep against it safely</td></tr>
+                        </table>
+                        <div class="specimen-directive">
+                            <strong>Can You Lean On It?</strong>
+                            “Safe to sleep against in a white silk shirt. Immovable, dust-free perfection.”
+                        </div>
+                    </div>
+                </div>
+
+                <!-- LEVEL 5 -->
+                <div class="scale-specimen-card card-lvl-5">
+                    <div class="specimen-header-bar">
+                        <span style="color: var(--teal); font-weight: 700;">🔵 LEVEL 05</span>
+                        <span style="color: var(--teal); font-family: var(--font-mono);">88/100</span>
+                    </div>
+                    <div class="specimen-img-frame">
+                        <img src="{{ url_for('static', filename='images/walls/level_6.jpg') }}" alt="Level 5 - Sunlit Red Brick" loading="lazy">
+                        <span class="specimen-frame-corner corner-tl">+</span>
+                        <span class="specimen-frame-corner corner-tr">+</span>
+                        <span class="specimen-frame-corner corner-bl">+</span>
+                        <span class="specimen-frame-corner corner-br">+</span>
+                    </div>
+                    <div class="specimen-body">
+                        <div class="specimen-title">Sunlit Red Brick</div>
+                        <p style="font-size: 0.8rem; color: var(--subtext0);">Classic exposed brick with clean mortar. Dry, warm, and sturdy.</p>
+                        <table class="specimen-specs-table">
+                            <tr><td>Material</td><td>Kiln-Fired Brick</td></tr>
+                            <tr><td>Chalk on Shirt</td><td>Zero dust</td></tr>
+                            <tr><td>Can You Lean?</td><td>Great for long calls</td></tr>
+                        </table>
+                        <div class="specimen-directive">
+                            <strong>Can You Lean On It?</strong>
+                            “An absolute best friend for long phone calls. Leaves zero chalk on your back.”
+                        </div>
+                    </div>
+                </div>
+
+                <!-- LEVEL 4 -->
+                <div class="scale-specimen-card card-lvl-4">
+                    <div class="specimen-header-bar">
+                        <span style="color: var(--blue); font-weight: 700;">🔷 LEVEL 04</span>
+                        <span style="color: var(--blue); font-family: var(--font-mono);">75/100</span>
+                    </div>
+                    <div class="specimen-img-frame">
+                        <img src="{{ url_for('static', filename='images/walls/level_5.jpg') }}" alt="Level 4 - Campus Lecture Corridor" loading="lazy">
+                        <span class="specimen-frame-corner corner-tl">+</span>
+                        <span class="specimen-frame-corner corner-tr">+</span>
+                        <span class="specimen-frame-corner corner-bl">+</span>
+                        <span class="specimen-frame-corner corner-br">+</span>
+                    </div>
+                    <div class="specimen-body">
+                        <div class="specimen-title">College Corridor Wall</div>
+                        <p style="font-size: 0.8rem; color: var(--subtext0);">Standard college hallway wall with faint shoe marks near the floor.</p>
+                        <table class="specimen-specs-table">
+                            <tr><td>Material</td><td>Classroom Drywall</td></tr>
+                            <tr><td>Chalk on Shirt</td><td>Very low</td></tr>
+                            <tr><td>Can You Lean?</td><td>Comfortable support</td></tr>
+                        </table>
+                        <div class="specimen-directive">
+                            <strong>Can You Lean On It?</strong>
+                            “Reliable support. Millions of exhausted students have leaned here before you.”
+                        </div>
+                    </div>
+                </div>
+
+                <!-- LEVEL 3 -->
+                <div class="scale-specimen-card card-lvl-3">
+                    <div class="specimen-header-bar">
+                        <span style="color: var(--peach); font-weight: 700;">🟠 LEVEL 03</span>
+                        <span style="color: var(--peach); font-family: var(--font-mono);">40/100</span>
+                    </div>
+                    <div class="specimen-img-frame">
+                        <img src="{{ url_for('static', filename='images/walls/level_3.jpg') }}" alt="Level 3 - Flaking Hostel Plaster" loading="lazy">
+                        <span class="specimen-frame-corner corner-tl">+</span>
+                        <span class="specimen-frame-corner corner-tr">+</span>
+                        <span class="specimen-frame-corner corner-bl">+</span>
+                        <span class="specimen-frame-corner corner-br">+</span>
+                    </div>
+                    <div class="specimen-body">
+                        <div class="specimen-title">Peeling Hostel Plaster</div>
+                        <p style="font-size: 0.8rem; color: var(--subtext0);">Yellowed peeling paint and chalk powder waiting for a victim in a dark shirt.</p>
+                        <table class="specimen-specs-table">
+                            <tr><td>Material</td><td>Old Peeling Paint</td></tr>
+                            <tr><td>Chalk on Shirt</td><td>Very High (85%)</td></tr>
+                            <tr><td>Can You Lean?</td><td>Dangerous for clothes</td></tr>
+                        </table>
+                        <div class="specimen-directive">
+                            <strong>Can You Lean On It?</strong>
+                            “Lean on this in dark clothes and you'll walk away looking like a powdered donut.”
+                        </div>
+                    </div>
+                </div>
+
+                <!-- LEVEL 2 -->
+                <div class="scale-specimen-card card-lvl-2">
+                    <div class="specimen-header-bar">
+                        <span style="color: var(--red); font-weight: 700;">🔴 LEVEL 02</span>
+                        <span style="color: var(--red); font-family: var(--font-mono);">20/100</span>
+                    </div>
+                    <div class="specimen-img-frame">
+                        <img src="{{ url_for('static', filename='images/walls/level_2.jpg') }}" alt="Level 2 - Crumbling Broken Brick" loading="lazy">
+                        <span class="specimen-frame-corner corner-tl">+</span>
+                        <span class="specimen-frame-corner corner-tr">+</span>
+                        <span class="specimen-frame-corner corner-bl">+</span>
+                        <span class="specimen-frame-corner corner-br">+</span>
+                    </div>
+                    <div class="specimen-body">
+                        <div class="specimen-title">Crumbling Broken Brick</div>
+                        <p style="font-size: 0.8rem; color: var(--subtext0);">Big cracks, missing mortar, rubble on the ground, leaning at an alarming angle.</p>
+                        <table class="specimen-specs-table">
+                            <tr><td>Material</td><td>Broken Masonry</td></tr>
+                            <tr><td>Collapse Risk</td><td>High</td></tr>
+                            <tr><td>Can You Lean?</td><td>Do not touch</td></tr>
+                        </table>
+                        <div class="specimen-directive">
+                            <strong>Can You Lean On It?</strong>
+                            “One firm sneeze and you become part of the demolition crew. Back away slowly.”
+                        </div>
+                    </div>
+                </div>
+
+                <!-- LEVEL 1 -->
+                <div class="scale-specimen-card card-lvl-1">
+                    <div class="specimen-header-bar" style="background: rgba(237, 135, 150, 0.2);">
+                        <span style="color: var(--red); font-weight: 700;">☣️ LEVEL 01 (AVOID)</span>
+                        <span style="color: var(--red); font-family: var(--font-mono);">02/100</span>
+                    </div>
+                    <div class="specimen-img-frame">
+                        <img src="{{ url_for('static', filename='images/walls/level_1.jpg') }}" alt="Level 1 - Ancient Weeping Moss Bog" loading="lazy">
+                        <span class="specimen-frame-corner corner-tl">+</span>
+                        <span class="specimen-frame-corner corner-tr">+</span>
+                        <span class="specimen-frame-corner corner-bl">+</span>
+                        <span class="specimen-frame-corner corner-br">+</span>
+                    </div>
+                    <div class="specimen-body">
+                        <div class="specimen-title" style="color: var(--red);">Ancient Wet Moss Wall</div>
+                        <p style="font-size: 0.8rem; color: var(--subtext0);">Centuries old, drenched in slimy green moss, black water, and mold.</p>
+                        <table class="specimen-specs-table">
+                            <tr><td>Condition</td><td>Rotting &amp; Soaking Wet</td></tr>
+                            <tr><td>Wetness</td><td>99% Wet</td></tr>
+                            <tr><td>Can You Lean?</td><td>DO NOT TOUCH</td></tr>
+                        </table>
+                        <div class="specimen-directive">
+                            <strong>Can You Lean On It?</strong>
+                            “DO NOT TOUCH. Appalling to stand within 5 feet of. Leaning here gives you an architectural curse.”
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- 04 RECENT CHECKS -->
+        <section style="margin-top: 1.5rem;">
+            <div class="scale-section-header">
+                <div>
+                    <h2 style="font-size: 1.15rem; font-family: var(--font-mono); text-transform: uppercase;">
+                        04 // RECENTLY TESTED WALLS
+                    </h2>
+                    <p style="color: var(--subtext0); font-size: 0.82rem;">
+                        Walls checked and saved in the database.
+                    </p>
+                </div>
+                <div>
+                    <a href="/database" class="btn-secondary-eng">[ VIEW ALL WALLS ]</a>
+                </div>
+            </div>
+
+            {% if recent_walls %}
+            <div class="eng-table-wrapper">
+                <table class="eng-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 70px;">ID</th>
+                            <th>Wall Location</th>
+                            <th>Dimensions</th>
+                            <th>Cracks</th>
+                            <th>Condition</th>
+                            <th>Score</th>
+                            <th>Verdict</th>
+                            <th>Report</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for wall in recent_walls %}
+                        <tr>
+                            <td>#{{ wall.id }}</td>
+                            <td><strong>{{ wall.location }}</strong></td>
+                            <td>{{ wall.height }}m high, {{ wall.thickness }}mm thick</td>
+                            <td>
+                                {% if wall.cracks > 0 %}
+                                <span style="color: var(--red);">{{ wall.cracks }} cracks</span>
+                                {% else %}
+                                <span style="color: var(--overlay0);">No cracks</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if wall.dampness %}
+                                <span style="color: var(--red);">💧 WET</span>
+                                {% else %}
+                                <span style="color: var(--green);">DRY</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <strong style="color: {% if wall.score >= 80 %}var(--green){% elif wall.score >= 60 %}var(--teal){% elif wall.score >= 40 %}var(--yellow){% else %}var(--red){% endif %}; font-size: 1rem;">
+                                    {{ wall.score }}/100
+                                </strong>
+                            </td>
+                            <td>
+                                <span class="table-badge {% if wall.score >= 80 %}badge-trustworthy{% elif wall.score >= 60 %}badge-mostly{% elif wall.score >= 40 %}badge-suspicious{% else %}badge-danger{% endif %}">
+                                    {{ wall.verdict }}
+                                </span>
+                            </td>
+                            <td>
+                                <a href="/result/{{ wall.id }}" class="btn-secondary-eng" style="padding: 0.2rem 0.5rem; font-size: 0.72rem;">[ VIEW ]</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <div style="padding: 1.5rem; border: 1px dashed var(--surface1); text-align: center; color: var(--subtext0); font-family: var(--font-mono); font-size: 0.8rem; margin-bottom: 2rem;">
+                No walls checked yet. Test a wall above to see it here.
+            </div>
+            {% endif %}
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="sys-footer">
+        <div class="footer-inner">
+            <div>
+                CAN YOU LEAN ON? // Built by <strong>Kashinath P K</strong>
+            </div>
+            <div>
+                A fun project for tired students. All scores are for entertainment.
+            </div>
+        </div>
+    </footer>
+
+    <!-- SCAN MODAL ON SUBMIT -->
+    <div id="scan-modal">
+        <div class="scan-dialog">
+            <div class="scan-radar-box">
+                <div class="scan-ring"></div>
+                <div class="scan-ring-outer"></div>
+                <span style="font-size: 1.8rem;">📐</span>
+            </div>
+            <div class="scan-title">[ CHECKING YOUR WALL... ]</div>
+            <div id="scan-status-text" class="scan-status-text">
+                Measuring wall strength &amp; checking for chalk powder...
+            </div>
+            <div class="scan-bar-track">
+                <div class="scan-bar-fill"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
-
 </html>

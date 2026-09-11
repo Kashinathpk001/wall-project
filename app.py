@@ -134,22 +134,238 @@ def get_verdict(score):
         return "DO NOT TRUST"
 
 
-def get_personality(score, cracks, dampness, repairs):
-    if cracks >= 4 and dampness:
-        return "The Walking Disaster"
-    elif repairs >= 3:
-        return "The Comeback Story"
-    elif score >= 80:
-        return "The Reliable One"
-    elif score >= 50:
-        return "It's Complicated"
+def get_verdict_info(score):
+    if score >= 80:
+        return "TRUSTWORTHY", "verdict-trustworthy", "#A6DA95"
+    elif score >= 60:
+        return "MOSTLY TRUSTWORTHY", "verdict-mostly", "#8BD5CA"
+    elif score >= 40:
+        return "SUSPICIOUS", "verdict-suspicious", "#EED49F"
     else:
-        return "The Red Flag"
+        return "DO NOT TRUST", "verdict-danger", "#ED8796"
+
+
+def get_personality_details(score, cracks, dampness, repairs, location=""):
+    loc_lower = location.lower()
+    
+    # Campus specific easter egg personality overlays
+    if "canteen" in loc_lower or "pazhampori" in loc_lower or "pazham" in loc_lower or "pori" in loc_lower or "sulaimani" in loc_lower or "chaya" in loc_lower or "thattukada" in loc_lower or "cafeteria" in loc_lower:
+        return (
+            "The Pazhampori Sentry",
+            "Infused with 12 years of sizzling coconut oil fumes, strong tea steam, and crisp Pazhampori splatters. Vibrates rhythmically during the 4 PM Sulaimani rush.",
+            "☕ Chayakada Advisory: Never lean with a white shirt or mundu; coconut oil betrayal is guaranteed."
+        )
+    elif "admin" in loc_lower or "fee" in loc_lower or "counter" in loc_lower:
+        return (
+            "The Bureaucratic Stonewall",
+            "Impenetrable, emotionless, and requires Form 4-B in triplicate just to hang a calendar. 0% structural empathy.",
+            "🏛️ Admin Clearance: So unyielding that Wi-Fi signals bounce right off it."
+        )
+    elif "cricket" in loc_lower or "hostel" in loc_lower or "dorm" in loc_lower:
+        return (
+            "The Comeback Story",
+            "Constructed from 40% drywall and 60% emergency spackle. Has stopped 34 leather cricket balls and an errant chair.",
+            "🏏 Sports Advisory: Do not bowl spin deliveries into the third-floor joint."
+        )
+    elif "library" in loc_lower or "study" in loc_lower:
+        return (
+            "The Silent Confessor",
+            "Has quietly absorbed over 85,000 student existential groans the night before calculus midterms. Deeply traumatized.",
+            "📚 Library Protocol: Speak in hushed tones; this wall has emotional PTSD."
+        )
+    elif "washroom" in loc_lower or "bathroom" in loc_lower or "stall" in loc_lower:
+        return (
+            "The Walking Disaster",
+            "A razor-thin 45mm partition bearing the philosophical musings and emergency heartbreak poetry of 40 batches.",
+            "🚽 Stall Warning: One heavy kick and this partition enters the next postal code."
+        )
+    elif "chem" in loc_lower or "lab" in loc_lower:
+        return (
+            "The Blast Shield",
+            "Chemical staining suggests it survived an unauthorized potassium experiment in 2022. Smells faintly of sulfur.",
+            "🧪 Lab Hazard: Touch only with heat-resistant tongs and protective goggles."
+        )
+
+    # Standard personalities
+    if cracks >= 4 and dampness:
+        return (
+            "The Walking Disaster",
+            "Active weeping moisture, rampant fissures, and zero structural morale. This wall is actively plotting its descent.",
+            "⚠️ Immediate Hazard: Do not mount shelves or lean against this structure."
+        )
+    elif repairs >= 3:
+        return (
+            "The Comeback Story",
+            "More spackle and compound than original drywall. Survived toddler artwork, DIY plumbing, and aggressive door slams.",
+            "🛠️ Veteran Status: Held together by sheer determination and prayer."
+        )
+    elif score >= 80:
+        return (
+            "The Reliable One",
+            "A stoic architectural monolith. Has stood through generations without flinching. Safe for heavy antique mirrors.",
+            "🛡️ Security Clearance: Certified load-bearing rockstar."
+        )
+    elif score >= 50:
+        return (
+            "It's Complicated",
+            "Technically standing, but mentally checked out. Avoid loud arguments or intense bass vibrations nearby.",
+            "🤔 Behavioral Advice: Polite nods only; do not test its emotional patience."
+        )
+    else:
+        return (
+            "The Red Flag",
+            "One energetic high-five away from structural collapse. Trembles in high humidity. Do not breathe near it.",
+            "🚨 Urgent Advisory: Treat with intense suspicion and keep safety goggles nearby."
+        )
+
+
+def get_red_flags(age, cracks, dampness, repairs, thickness, location=""):
+    flags = []
+    loc_lower = location.lower()
+
+    # Campus humorous specific flags
+    if "canteen" in loc_lower or "pazhampori" in loc_lower or "pazham" in loc_lower or "pori" in loc_lower or "sulaimani" in loc_lower or "chaya" in loc_lower or "thattukada" in loc_lower or "cafeteria" in loc_lower:
+        flags.append("Coconut Oil & Sulaimani Saturation: 96% Coconut oil vapor and boiling Chaya steam absorbed into porous lime plaster.")
+    if "lecture" in loc_lower or "hall" in loc_lower:
+        flags.append("Student Ergonomic Indentation: Lower 1.2 meters polished glass-smooth by generations of sleeping students.")
+    if "hostel" in loc_lower or "dorm" in loc_lower or "cricket" in loc_lower:
+        flags.append("Midnight Cricket Ballistics: Suspicious circular impact craters concealed beneath anime and band posters.")
+    if "library" in loc_lower or "study" in loc_lower:
+        flags.append("Exam Tear Salinity: Moisture sensors indicate dampness is 98% distilled GPA-related panic.")
+    if "washroom" in loc_lower or "bathroom" in loc_lower or "stall" in loc_lower:
+        flags.append("Literary Graffiti Load: Inscribed with unverified calculus shortcuts, phone numbers, and heartbreak lyrics.")
+    if "chem" in loc_lower or "lab" in loc_lower:
+        flags.append("Acid Vapor Etching: Withstood 4 failed titrations and an unplanned magnesium combustion incident.")
+    if "admin" in loc_lower or "fee" in loc_lower:
+        flags.append("Bureaucratic Densification: So dense that not even Wi-Fi, cell reception, or student appeals can penetrate.")
+    if "gate" in loc_lower or "boundary" in loc_lower:
+        flags.append("Curfew Bypass Footholds: Shoe scuff marks at the 1.9m mark confirm routine midnight escape maneuvers.")
+
+    # Core algorithmic flags
+    if cracks >= 6:
+        flags.append(f"Severe Fracturing: {cracks} structural fissures detected. Wall is having an existential crisis.")
+    elif cracks >= 3:
+        flags.append(f"Noticeable Cracks: {cracks} cracks found. Emotional containment is failing.")
+    elif cracks >= 1:
+        flags.append(f"Minor Cracking: {cracks} hairline fissure(s) spotted. Keep a close watch.")
+
+    if dampness and not ("library" in loc_lower or "canteen" in loc_lower):
+        flags.append("Active Moisture: Wall is sweating/damp. It may be silently weeping on the inside.")
+
+    if thickness < 150:
+        flags.append(f"Dangerously Thin: Only {thickness}mm thick. One aggressive shoulder bump could cause a breach.")
+
+    if age >= 20:
+        flags.append(f"Senior Citizen Architecture: {age} years on duty. Suffers from chronic fatigue.")
+
+    if repairs >= 3 and not ("hostel" in loc_lower):
+        flags.append(f"Frequent Surgery: {repairs} prior patch jobs. More duct tape and compound than brick.")
+
+    return flags
+
+
+def get_useless_telemetry(score, thickness, cracks, dampness, age, shirt_color="black", posture="slouch"):
+    """Calculates completely useless metrics for the TinkerHub Useless Projects Hackathon."""
+    # 1. White chalk powder expected on shirt (in cm²)
+    base_chalk = 45 if age > 15 else 18
+    if cracks > 0:
+        base_chalk += cracks * 6
+    if dampness:
+        base_chalk = int(base_chalk * 0.35) # wet walls smear paste instead of powder
+    chalk_sqcm = min(220, max(0, int(base_chalk)))
+
+    # 2. Shirt Ruin Probability
+    shirt_mult = {
+        "black": 0.95,
+        "navy": 0.90,
+        "gray": 0.50,
+        "white": 0.12,
+        "silk": 0.99,
+        "uniform": 0.88,
+    }.get(shirt_color.lower(), 0.80)
+    shirt_ruin_pct = min(100, int((chalk_sqcm / 110) * 100 * shirt_mult + (20 if dampness else 0)))
+
+    # 3. Maximum Safe Lean Duration
+    if score >= 85:
+        max_duration = "14 minutes, 30 seconds (or until your leg falls asleep)"
+    elif score >= 65:
+        max_duration = "5 minutes, 15 seconds (shift posture every 45 seconds)"
+    elif score >= 40:
+        max_duration = "1 minute, 12 seconds (keep both feet firmly planted on ground)"
+    else:
+        max_duration = "0.3 seconds (do not make physical contact)"
+
+    # 4. Total Gossip Overheard by This Wall
+    gossip_count = int(age * 210 + cracks * 145 + 1420)
+
+    # 5. Useless Alternatives
+    if score < 50:
+        alternatives = [
+            "Lean against a reliable friend who won't flake chalk on your back.",
+            "Sit on the floor cross-legged and pretend you're doing meditation.",
+            "Bring a folding camp chair to campus next time.",
+            "Stand with rigid military posture and question your life decisions."
+        ]
+    else:
+        alternatives = [
+            "Safe to lean. Proceed to scroll Instagram reels for 45 minutes.",
+            "Enjoy the gentle embrace of campus concrete.",
+            "Optimal posture. You may now sip your Sulaimani tea in absolute peace."
+        ]
+
+    posture_names = {
+        "slouch": "The 4 PM Tea Slouch (45° backward lean)",
+        "reels": "The Reel Scroller (One shoulder against wall)",
+        "nap": "The 1st Period Nap (Forehead pressed directly against brick)",
+        "hero": "The Corridor Hero (One foot on wall, waiting for dramatic wind)",
+        "elbow": "The Casual Elbow Rest (Minimal commitment)"
+    }
+
+    import random
+    alt = alternatives[abs(hash(str(score) + str(age))) % len(alternatives)]
+
+    return {
+        "chalk_sqcm": chalk_sqcm,
+        "shirt_ruin_pct": shirt_ruin_pct,
+        "shirt_color_label": shirt_color.capitalize(),
+        "posture_label": posture_names.get(posture, posture),
+        "max_duration": max_duration,
+        "gossip_count": f"{gossip_count:,}",
+        "recommendation": alt,
+    }
 
 
 @app.route("/")
 def home():
-    return render_template("index.html")
+    conn, db_type = get_db_connection()
+    cursor = conn.cursor()
+    recent_walls = []
+    try:
+        cursor.execute("SELECT id, location, age, height, thickness, cracks, dampness, repairs, score, verdict, personality FROM walls ORDER BY id DESC LIMIT 5")
+        rows = cursor.fetchall()
+        for row in rows:
+            recent_walls.append({
+                "id": row[0],
+                "location": row[1],
+                "age": row[2],
+                "height": row[3],
+                "thickness": row[4],
+                "cracks": row[5],
+                "dampness": row[6],
+                "repairs": row[7],
+                "score": row[8],
+                "verdict": row[9],
+                "personality": row[10],
+            })
+    except Exception:
+        pass
+    finally:
+        try:
+            cursor.close()
+            conn.close()
+        except Exception:
+            pass
+    return render_template("index.html", recent_walls=recent_walls)
 
 
 @app.route("/inspect", methods=["GET", "POST"])
@@ -187,8 +403,9 @@ def inspect():
             repairs = 0
 
         score = calculate_score(age, cracks, dampness, repairs, thickness)
-        verdict = get_verdict(score)
-        personality = get_personality(score, cracks, dampness, repairs)
+        verdict, verdict_class, bar_color = get_verdict_info(score)
+        personality, personality_desc, personality_advisory = get_personality_details(score, cracks, dampness, repairs, location)
+        red_flags = get_red_flags(age, cracks, dampness, repairs, thickness, location)
 
         # Store wall inspection into database
         conn, db_type = get_db_connection()
@@ -249,16 +466,90 @@ def inspect():
             "repairs": repairs,
         }
 
+        shirt_color = request.form.get("shirt_color", "black")
+        posture = request.form.get("posture", "slouch")
+        useless_data = get_useless_telemetry(score, thickness, cracks, dampness, age, shirt_color, posture)
+
         return render_template(
             "result.html",
             wall=wall,
             wall_id=wall_id,
             score=score,
             verdict=verdict,
+            verdict_class=verdict_class,
+            bar_color=bar_color,
             personality=personality,
+            personality_desc=personality_desc,
+            personality_advisory=personality_advisory,
+            red_flags=red_flags,
+            useless_data=useless_data,
         )
 
     return render_template("inspect.html")
+
+
+@app.route("/result/<int:wall_id>")
+def result(wall_id):
+    conn, db_type = get_db_connection()
+    wall = None
+    if db_type == "mysql":
+        cursor = conn.cursor(dictionary=True)
+        cursor.execute("SELECT * FROM walls WHERE id = %s", (wall_id,))
+        wall = cursor.fetchone()
+        cursor.close()
+    else:
+        conn.row_factory = sqlite3.Row
+        cursor = conn.cursor()
+        cursor.execute("SELECT * FROM walls WHERE id = ?", (wall_id,))
+        row = cursor.fetchone()
+        if row:
+            wall = dict(row)
+        cursor.close()
+    conn.close()
+
+    if not wall:
+        return "Wall dossier not found", 404
+
+    score = wall.get("score", 50)
+    verdict, verdict_class, bar_color = get_verdict_info(score)
+    personality, personality_desc, personality_advisory = get_personality_details(
+        score,
+        wall.get("cracks", 0),
+        wall.get("dampness", 0),
+        wall.get("repairs", 0),
+        wall.get("location", ""),
+    )
+    red_flags = get_red_flags(
+        wall.get("cracks", 0),
+        wall.get("dampness", 0),
+        wall.get("thickness", 200),
+        wall.get("age", 10),
+        wall.get("repairs", 0),
+        wall.get("location", ""),
+    )
+
+    useless_data = get_useless_telemetry(
+        score,
+        wall.get("thickness", 200),
+        wall.get("cracks", 0),
+        wall.get("dampness", 0),
+        wall.get("age", 10),
+    )
+
+    return render_template(
+        "result.html",
+        wall=wall,
+        wall_id=wall_id,
+        score=score,
+        verdict=verdict,
+        verdict_class=verdict_class,
+        bar_color=bar_color,
+        personality=personality,
+        personality_desc=personality_desc,
+        personality_advisory=personality_advisory,
+        red_flags=red_flags,
+        useless_data=useless_data,
+    )
 
 
 @app.route("/database")

@@ -1,69 +1,153 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wall Inspection Database</title>
+    <title>All Checked Walls // CAN YOU LEAN ON?</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
-
 <body>
 
-    <h1>🧱 Wall Inspection Database</h1>
+    <!-- TOP HEADER -->
+    <header class="sys-header">
+        <div class="sys-bar-meta">
+            <div class="sys-status-pill">
+                <span class="status-dot"></span>
+                <span>STATUS: ONLINE</span>
+            </div>
+            <div>WALL DATABASE</div>
+            <div>ALL TESTED WALLS</div>
+        </div>
 
-    <nav>
-        <a href="/">Home</a> |
-        <a href="/inspect">Inspect a Wall</a> |
-        <a href="/leaderboard">Leaderboard</a> |
-        <a href="/database">Database</a>
-    </nav>
+        <nav class="sys-nav">
+            <div class="brand-cell">
+                <span>🧱 CAN YOU LEAN ON?</span>
+                <span class="brand-tag" style="background: var(--peach); color: var(--crust); font-weight: 700;">🏆 100% USELESS PROJECT</span>
+            </div>
+            <div class="nav-tabs">
+                <a href="/" class="nav-tab">
+                    <span>[01]</span> Home
+                </a>
+                <a href="/inspect" class="nav-tab">
+                    <span>[02]</span> Check a Wall
+                </a>
+                <a href="/#standards-scale" class="nav-tab">
+                    <span>[03]</span> 6 Wall Levels
+                </a>
+                <a href="/leaderboard" class="nav-tab">
+                    <span>[04]</span> Leaderboard
+                </a>
+                <a href="/database" class="nav-tab active">
+                    <span>[05]</span> All Walls
+                </a>
+            </div>
+        </nav>
+    </header>
 
-    <hr>
+    <div class="field-memo">
+        <div class="field-memo-inner">
+            <div>
+                <span class="field-memo-prefix">// TINKERHUB USELESS PROJECTS // </span>
+                <span class="field-memo-quote">The Complete Useless Wall Archive</span>
+            </div>
+            <div class="field-memo-source">
+                {{ walls|length }} campus walls tested for leaning safety and white chalk probability.
+            </div>
+        </div>
+    </div>
 
-    <h2>All Inspected Walls</h2>
+    <main class="workspace-container">
+        
+        <div class="filter-toolbar">
+            <div class="search-field-box">
+                <span style="color: var(--overlay0);">🔎</span>
+                <input type="text" id="wallSearch" placeholder="Search by name, location, or verdict..." onkeyup="filterWalls()">
+            </div>
+            <div>
+                <a href="/inspect" class="btn-execute" style="width: auto; padding: 0.5rem 1rem; margin-top: 0;">
+                    + Test New Wall
+                </a>
+            </div>
+        </div>
 
-    {% if walls %}
-    <table border="1" cellpadding="8" cellspacing="0">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Location</th>
-                <th>Age (yrs)</th>
-                <th>Height (m)</th>
-                <th>Thickness (mm)</th>
-                <th>Cracks</th>
-                <th>Dampness</th>
-                <th>Repairs</th>
-                <th>Score</th>
-                <th>Verdict</th>
-                <th>Personality</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for wall in walls %}
-            <tr>
-                <td>#{{ wall.id }}</td>
-                <td>{{ wall.location }}</td>
-                <td>{{ wall.age }}</td>
-                <td>{{ wall.height }}</td>
-                <td>{{ wall.thickness }}</td>
-                <td>{{ wall.cracks }}</td>
-                <td>{{ "Yes" if wall.dampness else "No" }}</td>
-                <td>{{ wall.repairs }}</td>
-                <td><strong>{{ wall.score }}/100</strong></td>
-                <td>{{ wall.verdict }}</td>
-                <td>{{ wall.personality }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-    {% else %}
-    <p>No walls inspected yet. <a href="/inspect">Inspect the first wall!</a></p>
-    {% endif %}
+        {% if walls %}
+        <div class="eng-table-wrapper">
+            <table class="eng-table" id="wallsTable">
+                <thead>
+                    <tr>
+                        <th style="width: 70px;">ID</th>
+                        <th>Wall Location</th>
+                        <th>Age</th>
+                        <th>Size</th>
+                        <th>Cracks</th>
+                        <th>Condition</th>
+                        <th>Patches</th>
+                        <th>Score</th>
+                        <th>Verdict</th>
+                        <th>Personality</th>
+                        <th style="width: 80px;">Report</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for wall in walls %}
+                    <tr>
+                        <td>#{{ wall.id }}</td>
+                        <td><strong>{{ wall.location }}</strong></td>
+                        <td>{{ wall.age }} yrs</td>
+                        <td>{{ wall.height }}m × {{ wall.thickness }}mm</td>
+                        <td>
+                            {% if wall.cracks > 0 %}
+                            <span style="color: var(--red);">{{ wall.cracks }}</span>
+                            {% else %}
+                            <span style="color: var(--overlay0);">0</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if wall.dampness %}
+                            <span style="color: var(--red);">💧 WET</span>
+                            {% else %}
+                            <span style="color: var(--green);">DRY</span>
+                            {% endif %}
+                        </td>
+                        <td>{{ wall.repairs }}</td>
+                        <td>
+                            <strong style="color: {% if wall.score >= 80 %}var(--green){% elif wall.score >= 60 %}var(--teal){% elif wall.score >= 40 %}var(--yellow){% else %}var(--red){% endif %};">
+                                {{ wall.score }}/100
+                            </strong>
+                        </td>
+                        <td>
+                            <span class="table-badge {% if wall.score >= 80 %}badge-trustworthy{% elif wall.score >= 60 %}badge-mostly{% elif wall.score >= 40 %}badge-suspicious{% else %}badge-danger{% endif %}">
+                                {{ wall.verdict }}
+                            </span>
+                        </td>
+                        <td><em>{{ wall.personality }}</em></td>
+                        <td>
+                            <a href="/result/{{ wall.id }}" class="btn-secondary-eng" style="padding: 0.2rem 0.5rem; font-size: 0.72rem;">[ VIEW ]</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div style="padding: 2rem; border: 1px dashed var(--surface1); text-align: center; color: var(--subtext0); font-family: var(--font-mono); font-size: 0.85rem;">
+            No walls in the database yet. Test a wall to start saving them here.
+        </div>
+        {% endif %}
 
-    <br>
-    <p><a href="/inspect"><button>Inspect Another Wall</button></a></p>
+    </main>
 
+    <footer class="sys-footer">
+        <div class="footer-inner">
+            <div>
+                CAN YOU LEAN ON? // Built by <strong>Kashinath P K</strong>
+            </div>
+            <div>
+                A fun project for tired students. All scores are for entertainment.
+            </div>
+        </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
-
 </html>
