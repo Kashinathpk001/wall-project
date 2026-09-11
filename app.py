@@ -1,64 +1,154 @@
 import os
 import sqlite3
+import tempfile
 from flask import Flask, render_template, request
 import mysql.connector
 
 app = Flask(__name__)
 
 # Database configuration (environment variables with local defaults)
-DB_HOST = os.environ.get("DB_HOST", "localhost")
-DB_USER = os.environ.get("DB_USER", "root")
-DB_PASSWORD = os.environ.get("DB_PASSWORD", "root")
-DB_NAME = os.environ.get("DB_NAME", "wall_trust")
-DB_PORT = int(os.environ.get("DB_PORT", 3306))
+DB_HOST = (os.environ.get("DB_HOST") or "").strip() or "localhost"
+DB_USER = (os.environ.get("DB_USER") or "").strip() or "root"
+DB_PASSWORD = (os.environ.get("DB_PASSWORD") or "").strip() or "root"
+DB_NAME = (os.environ.get("DB_NAME") or "").strip() or "wall_trust"
+
+raw_port = (os.environ.get("DB_PORT") or "").strip()
+try:
+    DB_PORT = int(raw_port) if raw_port else 3306
+except (ValueError, TypeError):
+    DB_PORT = 3306
 
 
 def get_db_connection():
-    """Connect to MySQL if available, or fall back to SQLite for reviewers."""
-    try:
-        conn = mysql.connector.connect(
-            host=DB_HOST,
-            user=DB_USER,
-            password=DB_PASSWORD,
-            database=DB_NAME,
-            port=DB_PORT,
-        )
-        return conn, "mysql"
-    except Exception:
-        # Fallback to local SQLite if MySQL is unreachable (e.g. for GitHub reviewers or Vercel)
-        db_path = "/tmp/wall_trust.db" if os.environ.get("VERCEL") else "wall_trust.db"
-        conn = sqlite3.connect(db_path)
-        cursor = conn.cursor()
-        cursor.execute(
-            """
-            CREATE TABLE IF NOT EXISTS walls (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                location TEXT NOT NULL,
-                age REAL NOT NULL,
-                height REAL NOT NULL,
-                thickness REAL NOT NULL,
-                cracks INTEGER NOT NULL,
-                dampness INTEGER NOT NULL,
-                repairs INTEGER NOT NULL,
-                score INTEGER NOT NULL,
-                verdict TEXT NOT NULL,
-                personality TEXT NOT NULL,
-                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    """Connect to MySQL if available, or fall back to SQLite for reviewers/serverless."""
+    is_vercel = bool(os.environ.get("VERCEL"))
+
+    # Skip MySQL if on Vercel and host is default localhost to prevent startup timeouts
+    if not (is_vercel and DB_HOST in ("localhost", "127.0.0.1", "")):
+        try:
+            conn = mysql.connector.connect(
+                host=DB_HOST,
+                user=DB_USER,
+                password=DB_PASSWORD,
+                database=DB_NAME,
+                port=DB_PORT,
+                connection_timeout=3,
             )
+            return conn, "mysql"
+        except Exception:
+            pass
+
+    # Fallback to local SQLite if MySQL is unreachable (e.g. for GitHub reviewers or Vercel)
+    db_path = os.path.join(tempfile.gettempdir(), "wall_trust.db") if is_vercel else "wall_trust.db"
+    conn = sqlite3.connect(db_path)
+    cursor = conn.cursor()
+    cursor.execute(
         """
+        CREATE TABLE IF NOT EXISTS walls (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            location TEXT NOT NULL,
+            age REAL NOT NULL,
+            height REAL NOT NULL,
+            thickness REAL NOT NULL,
+            cracks INTEGER NOT NULL,
+            dampness INTEGER NOT NULL,
+            repairs INTEGER NOT NULL,
+            score INTEGER NOT NULL,
+            verdict TEXT NOT NULL,
+            personality TEXT NOT NULL,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )
-        conn.commit()
-        return conn, "sqlite"
+    """
+    )
+    conn.commit()
+
+    # Seed initial demo walls if the SQLite database is fresh/empty
+    try:
+        cursor.execute("SELECT COUNT(*) FROM walls")
+        count = cursor.fetchone()[0]
+        if count == 0:
+            demo_walls = [
+                (
+                    "The Great North Wall (Ancient Brick)",
+                    35.0,
+                    3.2,
+                    230.0,
+                    2,
+                    0,
+                    1,
+                    65,
+                    "SUSPICIOUS",
+                    "The Resilient Veteran - Has seen empires fall and questionable posters hung.",
+                ),
+                (
+                    "Library Quiet Wall (Reinforced Concrete)",
+                    5.0,
+                    2.8,
+                    300.0,
+                    0,
+                    0,
+                    0,
+                    100,
+                    "TRUSTWORTHY",
+                    "The Stoic Monolith - Radiates pure architectural serenity.",
+                ),
+                (
+                    "Basement Boiler Wall (Damp Plaster)",
+                    18.0,
+                    2.4,
+                    120.0,
+                    7,
+                    1,
+                    4,
+                    10,
+                    "BETRAYAL IMMINENT",
+                    "The Structural Crybaby - One firm sneeze away from spontaneous failure.",
+                ),
+                (
+                    "Cafeteria Snack Corner Wall",
+                    8.0,
+                    3.0,
+                    200.0,
+                    1,
+                    0,
+                    0,
+                    85,
+                    "TRUSTWORTHY",
+                    "The Gravy Sponge - Absorbs gossip and lukewarm samosa steam with pride.",
+                ),
+            ]
+            cursor.executemany(
+                """
+                INSERT INTO walls (location, age, height, thickness, cracks, dampness, repairs, score, verdict, personality)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                """,
+                demo_walls,
+            )
+            conn.commit()
+    except Exception:
+        pass
+
+    return conn, "sqlite"
 
 
 def init_db():
-    """Ensure database and table exist in MySQL."""
+    """Ensure database and table exist in MySQL if configured, or SQLite."""
+    is_vercel = bool(os.environ.get("VERCEL"))
+    if is_vercel and DB_HOST in ("localhost", "127.0.0.1", ""):
+        try:
+            conn, _ = get_db_connection()
+            conn.close()
+        except Exception:
+            pass
+        return
+
     try:
         conn = mysql.connector.connect(
             host=DB_HOST,
             user=DB_USER,
             password=DB_PASSWORD,
             port=DB_PORT,
+            connection_timeout=3,
         )
         cursor = conn.cursor()
         cursor.execute(f"CREATE DATABASE IF NOT EXISTS {DB_NAME};")
@@ -85,7 +175,11 @@ def init_db():
         cursor.close()
         conn.close()
     except Exception:
-        pass
+        try:
+            conn, _ = get_db_connection()
+            conn.close()
+        except Exception:
+            pass
 
 
 # Initialize database on startup
