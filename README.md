@@ -77,11 +77,7 @@ For Software:
 ![6 Levels of Wall Health](static/images/walls/level_1.jpg)
 *Ranked visual reference guide from Level 6 (The Dream Wall - 100/100) down to Level 1 (Ancient Wet Moss Wall - 02/100 Biohazard).*
 
-### 3. Interactive Wall Audit & Holographic Radar Scanner
-![Audit Scanner](static/images/walls/level_5.jpg)
-*Specimen inspection form featuring Kerala campus presets (Lecture Hall 101, Cricket Corridor, Fee Counter) with animated radar telemetry.*
-
-### 4. Certified Wall Dossier & Psychological Archetype
+### 3. Certified Wall Dossier & Psychological Archetype
 ![Wall Dossier](static/images/walls/level_6.jpg)
 *Audited report with circular score count-up, pass/caution/fail verdict, psychiatric diagnosis, and red flag warnings.*
 
