@@ -11,13 +11,13 @@
 - Team Lead: Kashinath P K - [Your College Name]
 
 ### Project Description
-A satirical, Apple-grade architectural telemetry platform that answers humanity's most pressing unanswered question: **"Can you lean on this wall without it collapsing or ruining your shirt with chalk powder?"** Features a proprietary 0–100 Trust Score algorithm, psychiatric wall profiling, red flag audits, and a 7-level visual scale ranging from pristine museum concrete to ancient weeping moss bogs.
+A satirical, Apple-grade architectural telemetry platform that answers humanity's most pressing unanswered question: **"Can you lean on this wall without it collapsing or ruining your shirt with chalk powder?"** Features a proprietary 0–100 Trust Score algorithm, psychiatric wall profiling, red flag audits, and a 6-level visual scale ranging from pristine museum concrete to ancient weeping moss bogs.
 
 ### The Problem (that doesn't exist)
-Millions of tired college students, waiting chai-drinkers, and weary homeowners lean against walls every single day with blind, reckless faith. They have no idea if that wall is secretly plotting structural mutiny, weeping emotional moisture, or coated in 12 years of chayakada coconut oil. The tragic result? Ruined black hoodies, chalk dust embarrassments, and profound architectural trust issues.
+Millions of tired college students, waiting tea-drinkers, and weary homeowners lean against walls every single day with blind, reckless faith. They have no idea if that wall is secretly plotting structural mutiny, weeping emotional moisture, or coated in decades of chalk dust and peeling paint. The tragic result? Ruined black hoodies, chalk dust embarrassments, and profound architectural trust issues.
 
 ### The Solution (that nobody asked for)
-**CAN YOU LEAN ON?** provides comprehensive fictional integrity forensics. Users input wall height, millimeter girth, visible existential cracks, and weeping moisture levels. Our algorithm cross-examines the wall's loyalty, classifies it into psychological archetypes (e.g., *The Pazhampori Sentry*, *The Emotional Sponge*, *The Walking Disaster*), highlights tactical red flags, records the audit to a MySQL database with automatic SQLite fallback, and ranks it on the public Wall Hall of Fame & Shame.
+**CAN YOU LEAN ON?** provides comprehensive fictional integrity forensics. Users input wall height, millimeter girth, visible existential cracks, and weeping moisture levels. Our algorithm cross-examines the wall's loyalty, classifies it into psychological archetypes (e.g., *Nap Polish Certified*, *The Emotional Sponge*, *The Walking Disaster*), highlights tactical red flags, records the audit to a MySQL database with automatic SQLite fallback, and ranks it on the public Wall Hall of Fame & Shame.
 
 ---
 
@@ -78,8 +78,8 @@ For Software:
 *Ranked visual reference guide from Level 6 (The Dream Wall - 100/100) down to Level 1 (Ancient Wet Moss Wall - 02/100 Biohazard).*
 
 ### 3. Interactive Wall Audit & Holographic Radar Scanner
-![Audit Scanner](static/images/walls/level_4.jpg)
-*Specimen inspection form featuring Kerala campus presets (Pazhampori Counter, Cricket Corridor, Fee Counter) with animated radar telemetry.*
+![Audit Scanner](static/images/walls/level_5.jpg)
+*Specimen inspection form featuring Kerala campus presets (Lecture Hall 101, Cricket Corridor, Fee Counter) with animated radar telemetry.*
 
 ### 4. Certified Wall Dossier & Psychological Archetype
 ![Wall Dossier](static/images/walls/level_6.jpg)
@@ -110,13 +110,12 @@ flowchart TD
 ### Project Demo
 # Video
 [Add your demo video link here]
-*Demonstrates the pitch-black Apple opening animation, testing the Canteen Pazhampori Counter, holographic scanning, and inspecting the 6 Levels of Wall Health.*
+*Demonstrates the pitch-black Apple opening animation, testing the Lecture Hall 101 wall, holographic scanning, and inspecting the 6 Levels of Wall Health.*
 
 # Additional Demos
 - **Live Local URL:** `http://127.0.0.1:5000/`
 - **GitHub Repository:** `https://github.com/Kashinathpk001/wall-project`
 - **Interactive Preset Specimens:**
-  - ☕ *Campus Canteen Pazhampori Counter* (50/100 — The Pazhampori Sentry)
   - 😴 *Lecture Hall 101 Backrow* (70/100 — Nap Polish Certified)
   - 🏏 *Boys Hostel Cricket Corridor* (45/100 — Survived 14 Matches)
   - 🗄️ *College Fee Counter* (100/100 — Impenetrable Bureaucracy)
@@ -124,7 +123,7 @@ flowchart TD
 ---
 
 ## Team Contributions
-- **Kashinath P K**: End-to-end development — backend architecture with Flask, dual MySQL/SQLite fault-tolerant database integration, mathematical scoring algorithm, Apple Keynote-grade CSS & JS animations, holographic scanner UI, 7-level photorealistic visual tier scale, and satirical comedic writing.
+- **Kashinath P K**: End-to-end development — backend architecture with Flask, dual MySQL/SQLite fault-tolerant database integration, mathematical scoring algorithm, Apple Keynote-grade CSS & JS animations, holographic scanner UI, 6-level photorealistic visual tier scale, and satirical comedic writing.
 
 ---
 Made with ❤️ at TinkerHub Useless Projects 
