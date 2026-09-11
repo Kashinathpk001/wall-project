@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wall Inspection Result</title>
+</head>
+
+<body>
+
+    <h1>🧱 Wall Inspection Result</h1>
+
+    <h2>Verdict: {{ verdict }}</h2>
+    <h3>Trust Score: {{ score }} / 100</h3>
+    <p><strong>Wall Personality:</strong> {{ personality }}</p>
+
+    <hr>
+
+    <h3>Inspection Details</h3>
+    <ul>
+        <li><strong>Location:</strong> {{ wall.location }}</li>
+        <li><strong>Age:</strong> {{ wall.age }} years</li>
+        <li><strong>Height:</strong> {{ wall.height }} m</li>
+        <li><strong>Thickness:</strong> {{ wall.thickness }} mm</li>
+        <li><strong>Visible Cracks:</strong> {{ wall.cracks }}</li>
+        <li><strong>Dampness:</strong> {{ "Yes" if wall.dampness else "No" }}</li>
+        <li><strong>Previous Repairs:</strong> {{ wall.repairs }}</li>
+    </ul>
+
+    <br>
+    <a href="/inspect"><button>Inspect Another Wall</button></a>
+    <a href="/"><button>Back to Home</button></a>
+
+</body>
+
+</html>

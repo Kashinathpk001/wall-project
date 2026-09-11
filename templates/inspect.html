@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inspect a Wall</title>
+</head>
+
+<body>
+
+    <h1>🧱 Inspect a Wall</h1>
+
+    <form method="POST" action="/inspect">
+
+        <label for="location">Wall Location</label><br>
+        <input type="text" id="location" name="location" placeholder="e.g. Living Room North Wall" required>
+
+        <br><br>
+
+        <label for="age">Age (years)</label><br>
+        <input type="number" id="age" name="age" min="0" value="0" required>
+
+        <br><br>
+
+        <label for="height">Height (m)</label><br>
+        <input type="number" id="height" name="height" step="0.1" min="0" value="2.5" required>
+
+        <br><br>
+
+        <label for="thickness">Thickness (mm)</label><br>
+        <input type="number" id="thickness" name="thickness" min="0" value="200" required>
+
+        <br><br>
+
+        <label for="cracks">Visible Cracks</label><br>
+        <input type="number" id="cracks" name="cracks" min="0" value="0" required>
+
+        <br><br>
+
+        <label for="dampness">Dampness</label><br>
+        <select id="dampness" name="dampness">
+            <option value="0">No</option>
+            <option value="1">Yes</option>
+        </select>
+
+        <br><br>
+
+        <label for="repairs">Previous Repairs</label><br>
+        <input type="number" id="repairs" name="repairs" min="0" value="0" required>
+
+        <br><br>
+
+        <button type="submit">ANALYZE</button>
+
+    </form>
+
+    <br>
+    <a href="/">Back to Home</a>
+
+</body>
+
+</html>
